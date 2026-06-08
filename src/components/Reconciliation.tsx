@@ -121,8 +121,9 @@ export default function Reconciliation() {
       </div>
 
       <div className="hint">
-        ① <strong>통장내역 CSV</strong>(실제 지출)와 ② <strong>관리시스템 CSV</strong>를 올리면 자동
-        대조합니다. 칼럼: <code>작성일, 회차, 유형, 수량, 금액, 내용, 상세, 영수증, 초과</code>.
+        ① <strong>통장내역</strong>(실제 지출)과 ② <strong>관리시스템</strong> 파일을 올리면 자동
+        대조합니다. <strong>CSV·엑셀(.xlsx/.xls)</strong> 모두 지원하며, 칼럼은{' '}
+        <code>작성일, 회차, 유형, 수량, 금액, 내용, 상세, 영수증, 초과</code> 입니다.
         ③ <strong>증빙</strong>(PDF/이미지)을 올리면 OCR로 금액을 읽어 매칭합니다.
       </div>
 
@@ -131,21 +132,21 @@ export default function Reconciliation() {
         <h3>1. 파일 업로드</h3>
         <div className="form-row">
           <label className="field">
-            ① 통장내역 CSV (실제 지출)
+            ① 통장내역 CSV/엑셀 (실제 지출)
             <input
               ref={bankRef}
               type="file"
-              accept=".csv,.txt"
+              accept=".csv,.txt,.xlsx,.xls,.xlsm"
               onChange={(e) => e.target.files?.[0] && onBank(e.target.files[0])}
             />
             <span className="muted">{bank.length ? `${bank.length}건 로드됨` : '미선택'}</span>
           </label>
           <label className="field">
-            ② 관리시스템 CSV (등록 내역)
+            ② 관리시스템 CSV/엑셀 (등록 내역)
             <input
               ref={systemRef}
               type="file"
-              accept=".csv,.txt"
+              accept=".csv,.txt,.xlsx,.xls,.xlsm"
               onChange={(e) => e.target.files?.[0] && onSystem(e.target.files[0])}
             />
             <span className="muted">{system.length ? `${system.length}건 로드됨` : '미선택'}</span>
@@ -365,7 +366,7 @@ export default function Reconciliation() {
       {!result && (
         <div className="card">
           <div className="empty">
-            통장내역 CSV와 관리시스템 CSV를 업로드하면 대조 결과가 표시됩니다.
+            통장내역과 관리시스템 파일(CSV·엑셀)을 업로드하면 대조 결과가 표시됩니다.
           </div>
         </div>
       )}

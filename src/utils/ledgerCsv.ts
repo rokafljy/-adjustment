@@ -1,5 +1,6 @@
-// 관리시스템/통장 내역 CSV 파서
+// 관리시스템/통장 내역 CSV·엑셀 파서
 // 표준 칼럼: 작성일, 회차, 유형, 수량, 금액, 내용, 상세, 영수증, 초과
+import * as XLSX from 'xlsx';
 import { uid } from './format';
 
 export interface LedgerRow {
@@ -81,8 +82,8 @@ function headerIndex(header: string[]): Record<string, number> {
   return idx;
 }
 
-export function parseLedgerCsv(text: string): LedgerRow[] {
-  const rows = parseCsv(text);
+/** 2차원 셀 배열(헤더 포함)을 LedgerRow[] 로 변환 (CSV·엑셀 공통) */
+function rowsToLedger(rows: string[][]): LedgerRow[] {
   if (rows.length === 0) return [];
   const header = rows[0];
   const h = headerIndex(header);
@@ -125,7 +126,38 @@ export function parseLedgerCsv(text: string): LedgerRow[] {
   return out;
 }
 
+/** CSV 텍스트 파싱 */
+export function parseLedgerCsv(text: string): LedgerRow[] {
+  return rowsToLedger(parseCsv(text));
+}
+
+/** 엑셀(.xlsx/.xls) 파싱 — 첫 번째 시트 사용 */
+export function parseLedgerExcel(buf: ArrayBuffer): LedgerRow[] {
+  const wb = XLSX.read(buf, { type: 'array' });
+  const sheet = wb.Sheets[wb.SheetNames[0]];
+  if (!sheet) return [];
+  const raw = XLSX.utils.sheet_to_json<unknown[]>(sheet, {
+    header: 1,
+    defval: '',
+    raw: false, // 날짜 등을 표시 문자열로
+    blankrows: false,
+  });
+  const rows = raw.map((r) => r.map((c) => String(c ?? '')));
+  return rowsToLedger(rows);
+}
+
+function isExcel(file: File): boolean {
+  return (
+    /\.(xlsx|xls|xlsm)$/i.test(file.name) ||
+    file.type.includes('spreadsheet') ||
+    file.type.includes('excel')
+  );
+}
+
+/** 파일 확장자/타입에 따라 CSV 또는 엑셀로 파싱 */
 export async function parseLedgerFile(file: File): Promise<LedgerRow[]> {
-  const text = await file.text();
-  return parseLedgerCsv(text);
+  if (isExcel(file)) {
+    return parseLedgerExcel(await file.arrayBuffer());
+  }
+  return parseLedgerCsv(await file.text());
 }
