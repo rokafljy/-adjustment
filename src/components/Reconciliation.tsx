@@ -296,6 +296,15 @@ export default function Reconciliation() {
                   </div>
                 </div>
                 <div className="stat">
+                  <div className="label">선금 환급 적정 / 확인필요</div>
+                  <div className={`value ${audit.refundFlaggedTotal > 0 ? 'danger' : 'success'}`}>
+                    {formatWon(audit.refundOkTotal)}
+                  </div>
+                  <div className="muted" style={{ fontSize: 12, marginTop: 4 }}>
+                    확인필요 {formatWon(audit.refundFlaggedTotal)}
+                  </div>
+                </div>
+                <div className="stat">
                   <div className="label">1차 지원금 입금일</div>
                   <div className="value" style={{ fontSize: 18 }}>
                     {audit.firstSubsidyDate ?? '미확인'}
@@ -321,11 +330,11 @@ export default function Reconciliation() {
                     <thead>
                       <tr>
                         <th>거래일</th>
-                        <th>내용/메모</th>
+                        <th>수취인 / 메모</th>
                         <th className="num">금액</th>
                         <th>분류</th>
-                        <th>입금 기준</th>
                         <th>증빙</th>
+                        <th>선금환급</th>
                         <th>점검</th>
                       </tr>
                     </thead>
@@ -345,13 +354,6 @@ export default function Reconciliation() {
                             )}
                           </td>
                           <td>
-                            {t.beforeSubsidy ? (
-                              <span className="badge badge-ok">입금 전</span>
-                            ) : (
-                              <span className="badge badge-muted">입금 후</span>
-                            )}
-                          </td>
-                          <td>
                             {t.proof === 'confirmed' ? (
                               <span className="badge badge-ok">확인</span>
                             ) : t.proof === 'not_found' ? (
@@ -362,12 +364,49 @@ export default function Reconciliation() {
                               <span className="muted">-</span>
                             )}
                           </td>
+                          <td>
+                            {t.refund === 'ok' ? (
+                              <span className="badge badge-ok">적정</span>
+                            ) : t.refund === 'over' ? (
+                              <span className="badge badge-error">선금초과</span>
+                            ) : t.refund === 'none' ? (
+                              <span className="badge badge-warning">내역없음</span>
+                            ) : (
+                              <span className="muted">-</span>
+                            )}
+                          </td>
                           <td className="muted">{t.note}</td>
                         </tr>
                       ))}
                     </tbody>
                   </table>
                 </div>
+              )}
+
+              {audit.prefunds.length > 0 && (
+                <>
+                  <h4 style={{ margin: '16px 0 8px' }}>
+                    선금 내역 (1차 지원금 입금 전 개인 입금)
+                  </h4>
+                  <div className="table-wrap">
+                    <table>
+                      <thead>
+                        <tr>
+                          <th>입금자</th>
+                          <th className="num">선금 합계</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {audit.prefunds.map((p) => (
+                          <tr key={p.name}>
+                            <td>{p.name}</td>
+                            <td className="num">{formatWon(p.amount)}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </>
               )}
 
               {audit.subsidyDeposits.length > 0 && (
