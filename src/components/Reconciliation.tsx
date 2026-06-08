@@ -1,6 +1,6 @@
 import { useMemo, useRef, useState } from 'react';
 import * as XLSX from 'xlsx';
-import { parseLedgerFile, type LedgerRow } from '../utils/ledgerCsv';
+import { parseLedgerFileFull, type LedgerRow } from '../utils/ledgerCsv';
 import {
   reconcile,
   computeRoundBalances,
@@ -8,6 +8,7 @@ import {
   type ReconRow,
   type MatchStatus,
 } from '../utils/reconcile';
+import { auditBank } from '../utils/bankAudit';
 import {
   ocrProofFiles,
   expandProofFiles,
@@ -25,8 +26,10 @@ const STATUS_LABEL: Record<MatchStatus, { text: string; cls: string }> = {
 
 export default function Reconciliation() {
   const [bank, setBank] = useState<LedgerRow[]>([]);
+  const [bankDeposits, setBankDeposits] = useState<LedgerRow[]>([]);
   const [system, setSystem] = useState<LedgerRow[]>([]);
   const [budget, setBudget] = useState<number>(1800000);
+  const [subsidyFirst, setSubsidyFirst] = useState<number>(900000);
   const [proofIndex, setProofIndex] = useState<ProofIndex | undefined>();
   const [proofResults, setProofResults] = useState<ProofFileResult[]>([]);
   const [ocrRunning, setOcrRunning] = useState(false);
@@ -45,19 +48,30 @@ export default function Reconciliation() {
     () => computeRoundBalances(bank, budget),
     [bank, budget]
   );
+  const audit = useMemo(
+    () =>
+      auditBank(bank, bankDeposits, {
+        subsidyThreshold: subsidyFirst,
+        proof: proofIndex,
+      }),
+    [bank, bankDeposits, subsidyFirst, proofIndex]
+  );
 
   async function onBank(file: File) {
     try {
-      setBank(await parseLedgerFile(file));
+      const parsed = await parseLedgerFileFull(file);
+      setBank(parsed.expenses);
+      setBankDeposits(parsed.deposits);
     } catch (e) {
-      alert('통장내역 CSV 읽기 실패: ' + (e as Error).message);
+      alert('통장내역 파일 읽기 실패: ' + (e as Error).message);
     }
   }
   async function onSystem(file: File) {
     try {
-      setSystem(await parseLedgerFile(file));
+      const parsed = await parseLedgerFileFull(file);
+      setSystem(parsed.expenses);
     } catch (e) {
-      alert('관리시스템 CSV 읽기 실패: ' + (e as Error).message);
+      alert('관리시스템 파일 읽기 실패: ' + (e as Error).message);
     }
   }
   async function onProofs(files: FileList) {
@@ -151,7 +165,11 @@ export default function Reconciliation() {
               accept=".csv,.txt,.xlsx,.xls,.xlsm"
               onChange={(e) => e.target.files?.[0] && onBank(e.target.files[0])}
             />
-            <span className="muted">{bank.length ? `${bank.length}건 로드됨` : '미선택'}</span>
+            <span className="muted">
+              {bank.length
+                ? `지출 ${bank.length}건${bankDeposits.length ? ` · 입금 ${bankDeposits.length}건` : ''}`
+                : '미선택'}
+            </span>
           </label>
           <label className="field">
             ② 관리시스템 CSV/엑셀 (등록 내역)
@@ -169,6 +187,14 @@ export default function Reconciliation() {
               inputMode="numeric"
               value={budget ? budget.toLocaleString('ko-KR') : ''}
               onChange={(e) => setBudget(parseAmount(e.target.value))}
+            />
+          </label>
+          <label className="field">
+            1차 지원금 입금액(기준)
+            <input
+              inputMode="numeric"
+              value={subsidyFirst ? subsidyFirst.toLocaleString('ko-KR') : ''}
+              onChange={(e) => setSubsidyFirst(parseAmount(e.target.value))}
             />
           </label>
         </div>
@@ -240,6 +266,137 @@ export default function Reconciliation() {
               )}
             </div>
           </div>
+
+          {/* 통장 점검 (체크카드/이체 분류, 교통비 이체 증빙, 지원금 입금 시점) */}
+          {audit.isBank && (
+            <div className="card">
+              <h3>통장 점검 — 출금 분류 · 이체 점검</h3>
+              <div className="grid grid-stats" style={{ marginBottom: 16 }}>
+                <div className="stat">
+                  <div className="label">체크카드 결제</div>
+                  <div className="value">{formatWon(audit.cardTotal)}</div>
+                  <div className="muted" style={{ fontSize: 12, marginTop: 4 }}>
+                    {audit.cardCount}건
+                  </div>
+                </div>
+                <div className="stat">
+                  <div className="label">이체 합계</div>
+                  <div className="value">{formatWon(audit.transferTotal)}</div>
+                  <div className="muted" style={{ fontSize: 12, marginTop: 4 }}>
+                    {audit.transferCount}건 (교통비 {audit.transportCount}건)
+                  </div>
+                </div>
+                <div className="stat">
+                  <div className="label">교통비 이체 · 증빙 미확인</div>
+                  <div className={`value ${audit.transportNoProofTotal > 0 ? 'danger' : 'success'}`}>
+                    {formatWon(audit.transportNoProofTotal)}
+                  </div>
+                  <div className="muted" style={{ fontSize: 12, marginTop: 4 }}>
+                    지출결과서 필요
+                  </div>
+                </div>
+                <div className="stat">
+                  <div className="label">1차 지원금 입금일</div>
+                  <div className="value" style={{ fontSize: 18 }}>
+                    {audit.firstSubsidyDate ?? '미확인'}
+                  </div>
+                  <div className="muted" style={{ fontSize: 12, marginTop: 4 }}>
+                    지원금 입금 {audit.subsidyDeposits.length}건
+                  </div>
+                </div>
+              </div>
+
+              <div className="hint" style={{ marginBottom: 14 }}>
+                규칙 ① <strong>교통비 이체는 지출결과서 필수</strong> — 증빙을 올리면 자동 확인됩니다.
+                규칙 ② <strong>이체는 1차 지원금({formatWon(subsidyFirst)}) 입금 전 사용분 정산일 때 적정</strong>.
+                {audit.firstSubsidyDate && ` (기준일: ${audit.firstSubsidyDate})`}
+              </div>
+
+              <h4 style={{ margin: '4px 0 8px' }}>이체 내역 점검 ({audit.transfers.length})</h4>
+              {audit.transfers.length === 0 ? (
+                <div className="empty">이체 내역이 없습니다.</div>
+              ) : (
+                <div className="table-wrap">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>거래일</th>
+                        <th>내용/메모</th>
+                        <th className="num">금액</th>
+                        <th>분류</th>
+                        <th>입금 기준</th>
+                        <th>증빙</th>
+                        <th>점검</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {audit.transfers.map((t) => (
+                        <tr key={t.row.id}>
+                          <td>{t.row.date}</td>
+                          <td className="muted">
+                            {[t.row.content, t.row.detail].filter(Boolean).join(' / ') || '-'}
+                          </td>
+                          <td className="num">{formatWon(t.row.amount)}</td>
+                          <td>
+                            {t.isTransport ? (
+                              <span className="badge badge-warning">교통비 이체</span>
+                            ) : (
+                              <span className="badge badge-muted">일반 이체</span>
+                            )}
+                          </td>
+                          <td>
+                            {t.beforeSubsidy ? (
+                              <span className="badge badge-ok">입금 전</span>
+                            ) : (
+                              <span className="badge badge-muted">입금 후</span>
+                            )}
+                          </td>
+                          <td>
+                            {t.proof === 'confirmed' ? (
+                              <span className="badge badge-ok">확인</span>
+                            ) : t.proof === 'not_found' ? (
+                              <span className="badge badge-error">필요</span>
+                            ) : t.isTransport ? (
+                              <span className="badge badge-warning">필요</span>
+                            ) : (
+                              <span className="muted">-</span>
+                            )}
+                          </td>
+                          <td className="muted">{t.note}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
+
+              {audit.subsidyDeposits.length > 0 && (
+                <>
+                  <h4 style={{ margin: '16px 0 8px' }}>지원금 입금 내역</h4>
+                  <div className="table-wrap">
+                    <table>
+                      <thead>
+                        <tr>
+                          <th>입금일</th>
+                          <th>내용</th>
+                          <th className="num">금액</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {audit.subsidyDeposits.map((d) => (
+                          <tr key={d.id}>
+                            <td>{d.date}</td>
+                            <td>{d.content || d.detail || '-'}</td>
+                            <td className="num">{formatWon(d.amount)}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </>
+              )}
+            </div>
+          )}
 
           {/* 대조 결과 테이블 */}
           <div className="card">
