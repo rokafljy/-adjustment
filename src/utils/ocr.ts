@@ -2,7 +2,48 @@
 import * as pdfjsLib from 'pdfjs-dist';
 import pdfWorkerUrl from 'pdfjs-dist/build/pdf.worker.min.mjs?url';
 import { createWorker, type Worker } from 'tesseract.js';
+import JSZip from 'jszip';
 import type { ProofIndex } from './reconcile';
+
+const PROOF_EXT = /\.(pdf|png|jpe?g|gif|webp|bmp|tiff?)$/i;
+
+function mimeFromName(name: string): string {
+  const ext = name.toLowerCase().split('.').pop();
+  if (ext === 'pdf') return 'application/pdf';
+  if (ext === 'jpg' || ext === 'jpeg') return 'image/jpeg';
+  if (ext === 'png') return 'image/png';
+  if (ext === 'gif') return 'image/gif';
+  if (ext === 'webp') return 'image/webp';
+  if (ext === 'bmp') return 'image/bmp';
+  return 'application/octet-stream';
+}
+
+/**
+ * 업로드된 파일 목록을 OCR 대상 파일로 펼친다.
+ * .zip 은 내부의 PDF/이미지를 추출하고, 그 외 파일은 그대로 통과시킨다.
+ */
+export async function expandProofFiles(files: File[]): Promise<File[]> {
+  const out: File[] = [];
+  for (const file of files) {
+    if (/\.zip$/i.test(file.name) || file.type === 'application/zip') {
+      const zip = await JSZip.loadAsync(file);
+      const entries = Object.values(zip.files);
+      for (const entry of entries) {
+        if (entry.dir) continue;
+        const base = entry.name.split('/').pop() ?? entry.name;
+        // 맥OS 압축 부산물 등 무시
+        if (base.startsWith('.') || entry.name.includes('__MACOSX')) continue;
+        if (!PROOF_EXT.test(base)) continue;
+        const blob = await entry.async('blob');
+        out.push(new File([blob], base, { type: mimeFromName(base) }));
+      }
+    } else {
+      out.push(file);
+    }
+  }
+  // 파일명 순 정렬 (회차 순서 유지에 도움)
+  return out.sort((a, b) => a.name.localeCompare(b.name, 'ko'));
+}
 
 pdfjsLib.GlobalWorkerOptions.workerSrc = pdfWorkerUrl;
 

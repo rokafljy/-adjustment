@@ -8,7 +8,12 @@ import {
   type ReconRow,
   type MatchStatus,
 } from '../utils/reconcile';
-import { ocrProofFiles, type ProofFileResult, type OcrProgress } from '../utils/ocr';
+import {
+  ocrProofFiles,
+  expandProofFiles,
+  type ProofFileResult,
+  type OcrProgress,
+} from '../utils/ocr';
 import { formatWon, parseAmount } from '../utils/format';
 
 const STATUS_LABEL: Record<MatchStatus, { text: string; cls: string }> = {
@@ -59,13 +64,18 @@ export default function Reconciliation() {
     setOcrRunning(true);
     setOcrProgress(null);
     try {
-      const { results, index } = await ocrProofFiles(Array.from(files), (p) =>
+      const expanded = await expandProofFiles(Array.from(files));
+      if (expanded.length === 0) {
+        alert('압축파일/선택한 파일에서 PDF·이미지 증빙을 찾지 못했습니다.');
+        return;
+      }
+      const { results, index } = await ocrProofFiles(expanded, (p) =>
         setOcrProgress(p)
       );
       setProofResults(results);
       setProofIndex(index);
     } catch (e) {
-      alert('증빙 OCR 처리 중 오류: ' + (e as Error).message);
+      alert('증빙 처리 중 오류: ' + (e as Error).message);
     } finally {
       setOcrRunning(false);
       setOcrProgress(null);
@@ -124,7 +134,7 @@ export default function Reconciliation() {
         ① <strong>통장내역</strong>(실제 지출)과 ② <strong>관리시스템</strong> 파일을 올리면 자동
         대조합니다. <strong>CSV·엑셀(.xlsx/.xls)</strong> 모두 지원하며, 칼럼은{' '}
         <code>작성일, 회차, 유형, 수량, 금액, 내용, 상세, 영수증, 초과</code> 입니다.
-        ③ <strong>증빙</strong>(PDF/이미지)을 올리면 OCR로 금액을 읽어 매칭합니다.
+        ③ <strong>증빙</strong>(ZIP 압축파일 또는 PDF/이미지)을 올리면 OCR로 금액을 읽어 매칭합니다.
       </div>
 
       {/* 업로드 영역 */}
@@ -162,11 +172,11 @@ export default function Reconciliation() {
         </div>
         <div className="form-row">
           <label className="field" style={{ gridColumn: '1 / -1' }}>
-            ③ 증빙 파일 (PDF/이미지, 여러 개 가능 · 파일명에 "N회차" 포함 시 회차별 매칭)
+            ③ 증빙 파일 (ZIP 압축파일 또는 PDF/이미지 여러 개 · 파일명에 "N회차" 포함 시 회차별 매칭)
             <input
               ref={proofRef}
               type="file"
-              accept=".pdf,image/*"
+              accept=".zip,.pdf,image/*"
               multiple
               disabled={ocrRunning}
               onChange={(e) => e.target.files?.length && onProofs(e.target.files)}
