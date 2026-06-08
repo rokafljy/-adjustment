@@ -7,8 +7,16 @@ import Categories from './components/Categories';
 import Expenses from './components/Expenses';
 import Settlement from './components/Settlement';
 import Report from './components/Report';
+import Reconciliation from './components/Reconciliation';
 
-type View = 'dashboard' | 'teams' | 'categories' | 'expenses' | 'settlement' | 'report';
+type View =
+  | 'dashboard'
+  | 'teams'
+  | 'categories'
+  | 'expenses'
+  | 'settlement'
+  | 'reconciliation'
+  | 'report';
 
 const NAV: { key: View; label: string; icon: string }[] = [
   { key: 'dashboard', label: '대시보드', icon: '📊' },
@@ -16,6 +24,7 @@ const NAV: { key: View; label: string; icon: string }[] = [
   { key: 'categories', label: '지출 항목 설정', icon: '🏷️' },
   { key: 'expenses', label: '지출 내역', icon: '🧾' },
   { key: 'settlement', label: '정산 검토', icon: '🔍' },
+  { key: 'reconciliation', label: '정산 검증(대조)', icon: '🔀' },
   { key: 'report', label: '정산 보고서', icon: '📄' },
 ];
 
@@ -59,6 +68,7 @@ export default function App() {
         {view === 'categories' && <Categories />}
         {view === 'expenses' && <Expenses />}
         {view === 'settlement' && <Settlement settlements={settlements} />}
+        {view === 'reconciliation' && <Reconciliation />}
         {view === 'report' && <Report settlements={settlements} />}
       </main>
     </div>
