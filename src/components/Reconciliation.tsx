@@ -132,8 +132,10 @@ export default function Reconciliation() {
 
       <div className="hint">
         ① <strong>통장내역</strong>(실제 지출)과 ② <strong>관리시스템</strong> 파일을 올리면 자동
-        대조합니다. <strong>CSV·엑셀(.xlsx/.xls)</strong> 모두 지원하며, 칼럼은{' '}
-        <code>작성일, 회차, 유형, 수량, 금액, 내용, 상세, 영수증, 초과</code> 입니다.
+        대조합니다. <strong>CSV·엑셀(.xlsx/.xls)</strong> 모두 지원합니다. 카카오뱅크 등{' '}
+        <strong>통장 거래내역 엑셀</strong>도 자동 인식하며(머리말 건너뛰고 <strong>출금만</strong>{' '}
+        추출, 입금·이자·캐시백 제외), 관리시스템 양식은{' '}
+        <code>작성일·회차·유형·수량·금액·내용·상세·영수증·초과</code> 칼럼을 사용합니다.
         ③ <strong>증빙</strong>(ZIP 압축파일 또는 PDF/이미지)을 올리면 OCR로 금액을 읽어 매칭합니다.
       </div>
 

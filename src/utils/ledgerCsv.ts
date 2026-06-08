@@ -83,35 +83,73 @@ function headerIndex(header: string[]): Record<string, number> {
 }
 
 /** 2차원 셀 배열(헤더 포함)을 LedgerRow[] 로 변환 (CSV·엑셀 공통) */
+/** 날짜 정규화: "2026.04.16 19:52:55" / "2026/4/16" → "2026-04-16" */
+function normDate(v: string): string {
+  const s = String(v ?? '').trim();
+  const m = s.match(/(\d{4})[.\-/](\d{1,2})[.\-/](\d{1,2})/);
+  if (m) return `${m[1]}-${m[2].padStart(2, '0')}-${m[3].padStart(2, '0')}`;
+  return s.slice(0, 10);
+}
+
+// 헤더 탐지에 쓰는 인식 가능한 칼럼명 모음
+const KNOWN_HEADERS = [
+  '작성일', '지출일', '지출날짜', '날짜', '사용일', '거래일시', '거래일자',
+  '회차', '유형', '항목', '거래구분', '구분', '입출금',
+  '수량', '금액', '지출액', '사용액', '거래금액', '출금액', '결제금액',
+  '내용', '품명', '적요', '상세', '상세내역', '사용처', '거래처', '메모',
+  '영수증', '증빙', '증빙여부', '초과', '거래 후 잔액',
+];
+
+/** 표 안에서 실제 헤더가 있는 행을 찾는다(계좌정보 머리말 등 건너뜀) */
+function findHeaderRow(rows: string[][]): number {
+  const limit = Math.min(rows.length, 40);
+  for (let i = 0; i < limit; i++) {
+    const hits = rows[i].filter((c) => KNOWN_HEADERS.includes(String(c).trim())).length;
+    if (hits >= 2) return i;
+  }
+  return 0;
+}
+
 function rowsToLedger(rows: string[][]): LedgerRow[] {
   if (rows.length === 0) return [];
-  const header = rows[0];
+  const headerRow = findHeaderRow(rows);
+  const header = rows[headerRow];
   const h = headerIndex(header);
 
   const col = (names: string[]): number => {
     for (const n of names) if (h[n] !== undefined) return h[n];
     return -1;
   };
-  const cDate = col(['작성일', '지출일', '날짜', '사용일']);
+  const cDate = col(['작성일', '지출일', '지출날짜', '날짜', '사용일', '거래일시', '거래일자']);
   const cRound = col(['회차']);
-  const cType = col(['유형', '항목', '구분']);
+  const cType = col(['유형', '항목', '거래구분']);
   const cQty = col(['수량']);
-  const cAmount = col(['금액', '지출액', '사용액']);
-  const cContent = col(['내용', '품명']);
-  const cDetail = col(['상세', '상세내역', '사용처']);
+  // 거래금액(통장)을 금액보다 우선 인식
+  const cAmount = col(['거래금액', '출금액', '결제금액', '금액', '지출액', '사용액']);
+  const cContent = col(['내용', '품명', '적요']);
+  const cDetail = col(['상세', '상세내역', '사용처', '거래처', '메모', '내용']);
   const cReceipt = col(['영수증', '증빙', '증빙여부']);
   const cOver = col(['초과']);
+  // 입금/출금 구분 칼럼(카카오뱅크 등). '구분' 값이 입금/출금이면 방향으로 사용
+  const cDir = col(['구분', '입출금', '입출금구분']);
 
   const out: LedgerRow[] = [];
-  for (let i = 1; i < rows.length; i++) {
+  for (let i = headerRow + 1; i < rows.length; i++) {
     const r = rows[i];
     const get = (c: number) => (c >= 0 ? (r[c] ?? '').trim() : '');
-    const amount = num(get(cAmount));
+    const rawAmount = num(get(cAmount));
+    const dir = get(cDir);
+
+    // 통장 거래내역: 입금(선금·이자·캐시백 등)은 지출이 아니므로 제외
+    if (dir.includes('입금')) continue;
+
+    const amount = Math.abs(rawAmount);
     // 완전 빈 행 skip
     if (!amount && !get(cType) && !get(cDetail) && !get(cContent)) continue;
+
     out.push({
       id: uid('row'),
-      date: get(cDate),
+      date: normDate(get(cDate)),
       round: get(cRound),
       type: get(cType),
       qty: num(get(cQty)),
