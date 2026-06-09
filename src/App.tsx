@@ -7,29 +7,29 @@ import Categories from './components/Categories';
 import Expenses from './components/Expenses';
 import Settlement from './components/Settlement';
 import Report from './components/Report';
-import Reconciliation from './components/Reconciliation';
+import Verify from './components/Verify';
 
 type View =
+  | 'verify'
   | 'dashboard'
   | 'teams'
   | 'categories'
   | 'expenses'
   | 'settlement'
-  | 'reconciliation'
   | 'report';
 
 const NAV: { key: View; label: string; icon: string }[] = [
+  { key: 'verify', label: '정산 검증', icon: '🔀' },
   { key: 'dashboard', label: '대시보드', icon: '📊' },
   { key: 'teams', label: '팀 관리', icon: '👥' },
   { key: 'categories', label: '지출 항목 설정', icon: '🏷️' },
   { key: 'expenses', label: '지출 내역', icon: '🧾' },
   { key: 'settlement', label: '정산 검토', icon: '🔍' },
-  { key: 'reconciliation', label: '정산 검증(대조)', icon: '🔀' },
   { key: 'report', label: '정산 보고서', icon: '📄' },
 ];
 
 export default function App() {
-  const [view, setView] = useState<View>('dashboard');
+  const [view, setView] = useState<View>('verify');
   const { state } = useStore();
   const settlements = computeAllSettlements(state);
   const totalErrors = settlements.reduce((n, s) => n + s.errorCount, 0);
@@ -63,12 +63,12 @@ export default function App() {
       </aside>
 
       <main className="main">
+        {view === 'verify' && <Verify />}
         {view === 'dashboard' && <Dashboard settlements={settlements} onNavigate={setView} />}
         {view === 'teams' && <Teams />}
         {view === 'categories' && <Categories />}
         {view === 'expenses' && <Expenses />}
         {view === 'settlement' && <Settlement settlements={settlements} />}
-        {view === 'reconciliation' && <Reconciliation />}
         {view === 'report' && <Report settlements={settlements} />}
       </main>
     </div>

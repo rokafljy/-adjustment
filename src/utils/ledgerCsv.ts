@@ -5,17 +5,19 @@ import { uid } from './format';
 
 export interface LedgerRow {
   id: string;
-  date: string; // 작성일
+  date: string; // 작성일/거래일
   round: string; // 회차
-  type: string; // 유형 (다과비, 식대(내부), 거래구분: 체크카드결제/일반이체 등)
+  type: string; // 유형 (다과비 / 거래구분: 체크카드결제·일반이체 등)
   qty: number; // 수량
   amount: number; // 금액(원) - 항상 양수
-  content: string; // 내용
+  content: string; // 내용/적요
   detail: string; // 상세/메모
   hasReceipt: boolean; // 영수증 첨부(O/X)
   over: string; // 초과
   /** 입금/출금 (통장 거래내역). 관리양식은 '' */
   direction: string;
+  /** 거래 후 잔액(통장). 없으면 0 */
+  balanceAfter: number;
   /** 원본 행 번호(디버그/표시용) */
   line: number;
 }
@@ -25,6 +27,10 @@ export interface ParsedLedger {
   expenses: LedgerRow[]; // 지출(출금) — 관리양식은 전체
   deposits: LedgerRow[]; // 입금(통장만)
   isBankStatement: boolean;
+  /** 통장 현재 잔액(가장 최근 거래의 거래 후 잔액). 통장이 아니면 0 */
+  endingBalance: number;
+  /** 출처 이름(엑셀 시트명: "카카오뱅크 거래내역" 등) */
+  sourceName?: string;
 }
 
 /** 따옴표/콤마를 처리하는 간단한 CSV 파서 */
@@ -100,13 +106,13 @@ function normDate(v: string): string {
   return s.slice(0, 10);
 }
 
-// 헤더 탐지에 쓰는 인식 가능한 칼럼명 모음
+// 헤더 탐지에 쓰는 인식 가능한 칼럼명 모음 (카카오뱅크·토스뱅크·관리양식)
 const KNOWN_HEADERS = [
-  '작성일', '지출일', '지출날짜', '날짜', '사용일', '거래일시', '거래일자',
-  '회차', '유형', '항목', '거래구분', '구분', '입출금',
-  '수량', '금액', '지출액', '사용액', '거래금액', '출금액', '결제금액',
-  '내용', '품명', '적요', '상세', '상세내역', '사용처', '거래처', '메모',
-  '영수증', '증빙', '증빙여부', '초과', '거래 후 잔액',
+  '작성일', '지출일', '지출날짜', '날짜', '사용일', '거래일시', '거래 일시', '거래일자',
+  '회차', '유형', '항목', '거래구분', '거래 유형', '구분', '입출금',
+  '수량', '금액', '지출액', '사용액', '거래금액', '거래 금액', '출금액', '결제금액',
+  '내용', '품명', '적요', '상세', '상세내역', '사용처', '거래처', '메모', '거래 기관',
+  '영수증', '증빙', '증빙여부', '초과', '거래 후 잔액', '거래후잔액',
 ];
 
 /** 표 안에서 실제 헤더가 있는 행을 찾는다(계좌정보 머리말 등 건너뜀) */
@@ -120,7 +126,8 @@ function findHeaderRow(rows: string[][]): number {
 }
 
 function rowsToLedger(rows: string[][]): ParsedLedger {
-  if (rows.length === 0) return { expenses: [], deposits: [], isBankStatement: false };
+  if (rows.length === 0)
+    return { expenses: [], deposits: [], isBankStatement: false, endingBalance: 0 };
   const headerRow = findHeaderRow(rows);
   const header = rows[headerRow];
   const h = headerIndex(header);
@@ -129,38 +136,57 @@ function rowsToLedger(rows: string[][]): ParsedLedger {
     for (const n of names) if (h[n] !== undefined) return h[n];
     return -1;
   };
-  const cDate = col(['작성일', '지출일', '지출날짜', '날짜', '사용일', '거래일시', '거래일자']);
+  const cDate = col(['작성일', '지출일', '지출날짜', '날짜', '사용일', '거래일시', '거래 일시', '거래일자']);
   const cRound = col(['회차']);
-  const cType = col(['유형', '항목', '거래구분']);
+  const cType = col(['유형', '항목', '거래구분', '거래 유형']);
   const cQty = col(['수량']);
   // 거래금액(통장)을 금액보다 우선 인식
-  const cAmount = col(['거래금액', '출금액', '결제금액', '금액', '지출액', '사용액']);
-  const cContent = col(['내용', '품명', '적요']);
-  const cDetail = col(['상세', '상세내역', '사용처', '거래처', '메모', '내용']);
+  const cAmount = col(['거래금액', '거래 금액', '출금액', '결제금액', '금액', '지출액', '사용액']);
+  const cContent = col(['내용', '적요', '품명']);
+  const cDetail = col(['상세', '상세내역', '사용처', '거래처', '메모', '내용', '적요']);
   const cReceipt = col(['영수증', '증빙', '증빙여부']);
   const cOver = col(['초과']);
-  // 입금/출금 구분 칼럼(카카오뱅크 등)
+  const cBalance = col(['거래 후 잔액', '거래후잔액', '잔액']);
+  // 입금/출금 구분 칼럼(카카오뱅크). 토스뱅크는 없음 → 금액 부호로 판정
   const cDir = col(['구분', '입출금', '입출금구분']);
 
   const isBank =
-    cDir >= 0 || header.some((c) => ['거래금액', '거래일시', '거래 후 잔액'].includes(c.trim()));
+    cDir >= 0 ||
+    cBalance >= 0 ||
+    header.some((c) =>
+      ['거래금액', '거래 금액', '거래일시', '거래 일시', '거래 후 잔액', '거래 유형'].includes(
+        c.trim()
+      )
+    );
 
   const expenses: LedgerRow[] = [];
   const deposits: LedgerRow[] = [];
+  let endRaw = '';
+  let endingBalance = 0;
 
   for (let i = headerRow + 1; i < rows.length; i++) {
     const r = rows[i];
     const get = (c: number) => (c >= 0 ? (r[c] ?? '').trim() : '');
     const rawAmount = num(get(cAmount));
-    const dir = get(cDir);
+    // 방향: 구분 칼럼 우선, 없으면(토스) 금액 부호로 판정
+    let dir = get(cDir);
+    if (!dir && isBank) dir = rawAmount < 0 ? '출금' : '입금';
     const amount = Math.abs(rawAmount);
 
     // 완전 빈 행 skip
     if (!amount && !get(cType) && !get(cDetail) && !get(cContent)) continue;
 
+    const rawDate = get(cDate);
+    const balanceAfter = num(get(cBalance));
+    // 가장 최근 거래(문자열 일시 비교)의 잔액을 통장 현재 잔액으로
+    if (cBalance >= 0 && rawDate >= endRaw) {
+      endRaw = rawDate;
+      endingBalance = balanceAfter;
+    }
+
     const row: LedgerRow = {
       id: uid('row'),
-      date: normDate(get(cDate)),
+      date: normDate(rawDate),
       round: get(cRound),
       type: get(cType),
       qty: num(get(cQty)),
@@ -170,6 +196,7 @@ function rowsToLedger(rows: string[][]): ParsedLedger {
       hasReceipt: isReceipt(get(cReceipt)),
       over: get(cOver),
       direction: dir,
+      balanceAfter,
       line: i + 1,
     };
 
@@ -177,7 +204,7 @@ function rowsToLedger(rows: string[][]): ParsedLedger {
     if (dir.includes('입금')) deposits.push(row);
     else expenses.push(row);
   }
-  return { expenses, deposits, isBankStatement: isBank };
+  return { expenses, deposits, isBankStatement: isBank, endingBalance };
 }
 
 /** CSV 텍스트 파싱 (지출+입금 분리) */
@@ -190,22 +217,24 @@ export function parseLedgerCsv(text: string): LedgerRow[] {
   return parseLedgerCsvFull(text).expenses;
 }
 
-function readSheetRows(buf: ArrayBuffer): string[][] {
+function readSheet(buf: ArrayBuffer): { rows: string[][]; sheetName?: string } {
   const wb = XLSX.read(buf, { type: 'array' });
-  const sheet = wb.Sheets[wb.SheetNames[0]];
-  if (!sheet) return [];
+  const sheetName = wb.SheetNames[0];
+  const sheet = sheetName ? wb.Sheets[sheetName] : undefined;
+  if (!sheet) return { rows: [] };
   const raw = XLSX.utils.sheet_to_json<unknown[]>(sheet, {
     header: 1,
     defval: '',
     raw: false, // 날짜 등을 표시 문자열로
     blankrows: false,
   });
-  return raw.map((r) => r.map((c) => String(c ?? '')));
+  return { rows: raw.map((r) => r.map((c) => String(c ?? ''))), sheetName };
 }
 
 /** 엑셀 파싱 (지출+입금 분리) */
 export function parseLedgerExcelFull(buf: ArrayBuffer): ParsedLedger {
-  return rowsToLedger(readSheetRows(buf));
+  const { rows, sheetName } = readSheet(buf);
+  return { ...rowsToLedger(rows), sourceName: sheetName };
 }
 
 /** 엑셀 → 지출 행만 (back-compat) */
