@@ -62,7 +62,21 @@ python3 -m http.server 8000
 - **모바일 내비게이션** — 시안은 1024px 이하에서 메뉴 링크를 숨기기만 했습니다. 같은 톤의 햄버거 버튼과 드롭다운을 추가했습니다
 - **접근성** — 본문 바로가기 링크, 포커스 링, 연도 탭의 `tablist`/`tab`/`tabpanel` + 좌우 방향키 이동, 타임라인 카드 키보드 접근(시안은 hover 전용), 장식 요소 `aria-hidden`
 - **견고성** — JS가 없거나 실패해도 본문이 보이도록 페이드인 처리, `prefers-reduced-motion` 대응, 카운트다운 종료 시 타이머 정지, 탭 복귀 시 시각 동기화
+- **시안 버그 수정** — `.nav`가 `position:fixed` + `left:50%`라 shrink-to-fit 폭이 뷰포트의 절반으로 묶여, 1025~1300px 구간에서 메뉴 글자가 세로로 줄바꿈되던 문제를 `width:max-content`로 수정
 - **기타** — 전화·이메일·웹사이트를 실제 링크로, 인쇄 스타일시트
+
+## 단일 파일 미리보기
+
+검토용으로 파일 하나만 공유해야 할 때 CSS·JS·파비콘을 인라인한 자립형 HTML을 만들 수 있습니다.
+
+```bash
+python3 tools/build-preview.py                 # preview.html (완전한 HTML 문서)
+python3 tools/build-preview.py --fragment      # preview-fragment.html (문서 골격 없이 본문만)
+```
+
+미리보기는 웹폰트 출처가 Google Fonts로 제한되는 환경을 가정해 Pretendard(jsDelivr) 대신
+`Gothic A1`을 대체 폰트로 씁니다. 뷰어 기기에 Pretendard가 설치돼 있으면 그대로 Pretendard로
+렌더링됩니다. **배포본은 항상 `index.html` + `assets/`를 쓰세요** — 그쪽은 Pretendard 원본을 그대로 씁니다.
 
 ## OG 이미지 재생성
 
