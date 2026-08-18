@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026 대한민국 지속가능경영 대상</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;500;600;700;900&family=Pretendard:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" rel="stylesheet">
+<style>
+:root{
+  --ink:#0d1f14;
+  --forest:#1d3b29;
+  --forest-2:#264b34;
+  --moss:#4a7a57;
+  --sage:#8ba888;
+  --gold:#b69246;
+  --gold-dim:#8e7135;
+  --cream:#f5f0e4;
+  --cream-2:#ebe3cf;
+  --paper:#fbf8ef;
+  --line:rgba(13,31,20,.12);
+  --line-strong:rgba(13,31,20,.2);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Pretendard Variable','Pretendard',-apple-system,BlinkMacSystemFont,sans-serif;
+  color:var(--ink);
+  background:var(--paper);
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+.serif{font-family:'Noto Serif KR',serif;font-weight:500;letter-spacing:-.01em}
+.container{max-width:1240px;margin:0 auto;padding:0 32px}
+.eyebrow{
+  font-size:12px;letter-spacing:.3em;text-transform:uppercase;
+  color:var(--gold);font-weight:600;display:inline-flex;align-items:center;gap:10px;
+}
+.eyebrow::before{content:"";width:32px;height:1px;background:var(--gold)}
+.section-title{
+  font-family:'Noto Serif KR',serif;font-weight:600;
+  font-size:clamp(32px,4vw,52px);letter-spacing:-.02em;line-height:1.2;
+  color:var(--forest);
+}
+section{padding:120px 0;position:relative}
+.fade{opacity:0;transform:translateY(30px);transition:opacity .9s ease,transform .9s ease}
+.fade.in{opacity:1;transform:none}
+
+/* NAV */
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  background:rgba(251,248,239,.85);backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--line);
+}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;padding:18px 32px;max-width:1400px;margin:0 auto}
+.logo{display:flex;align-items:center;gap:12px}
+.logo-mark{
+  width:36px;height:36px;border-radius:50%;
+  background:radial-gradient(circle at 30% 30%,var(--moss),var(--forest));
+  display:grid;place-items:center;color:var(--cream);font-family:'Noto Serif KR',serif;font-weight:700;font-size:16px;
+}
+.logo-text{font-family:'Noto Serif KR',serif;font-weight:600;font-size:15px;color:var(--forest);letter-spacing:.01em}
+.logo-text small{display:block;font-family:'Pretendard Variable';font-size:10px;letter-spacing:.2em;color:var(--gold);font-weight:500;margin-top:2px}
+.nav-links{display:flex;gap:36px;list-style:none;font-size:13.5px;font-weight:500}
+.nav-links a{color:var(--forest);text-decoration:none;transition:color .2s;position:relative}
+.nav-links a:hover{color:var(--gold)}
+.nav-cta{
+  background:var(--forest);color:var(--cream);
+  padding:10px 22px;border-radius:2px;font-size:13px;font-weight:600;text-decoration:none;
+  letter-spacing:.05em;transition:background .2s;
+}
+.nav-cta:hover{background:var(--forest-2)}
+
+/* HERO */
+.hero{
+  min-height:100vh;padding:140px 0 80px;
+  background:
+    radial-gradient(1100px 600px at 80% 20%,rgba(74,122,87,.18),transparent 60%),
+    radial-gradient(800px 500px at 20% 80%,rgba(182,146,70,.1),transparent 60%),
+    linear-gradient(180deg,#0d2015 0%,#1a3323 40%,#1d3b29 100%);
+  color:var(--cream);
+  position:relative;overflow:hidden;
+}
+.hero::before{
+  content:"";position:absolute;inset:0;
+  background-image:
+    radial-gradient(circle at 1px 1px,rgba(245,240,228,.04) 1px,transparent 0);
+  background-size:24px 24px;
+  pointer-events:none;
+}
+.hero-leaf{
+  position:absolute;right:-80px;top:40%;width:520px;height:520px;opacity:.12;
+  transform:translateY(-50%);pointer-events:none;
+}
+.hero-grid{display:grid;grid-template-columns:1.3fr 1fr;gap:80px;align-items:center;position:relative;z-index:2}
+.hero h1{
+  font-family:'Noto Serif KR',serif;font-weight:500;
+  font-size:clamp(48px,6.5vw,88px);line-height:1.05;letter-spacing:-.03em;
+  margin:28px 0 32px;
+}
+.hero h1 em{font-style:normal;color:var(--gold);font-weight:600}
+.hero h1 .yr{
+  display:inline-block;font-weight:400;color:var(--sage);font-size:.55em;
+  vertical-align:top;margin-top:.4em;letter-spacing:-.01em;
+}
+.hero-sub{font-size:17px;line-height:1.8;color:rgba(245,240,228,.75);max-width:560px;margin-bottom:40px}
+.hero-meta{display:flex;gap:48px;padding-top:32px;border-top:1px solid rgba(245,240,228,.15)}
+.hero-meta-item{display:flex;flex-direction:column;gap:4px}
+.hero-meta-item .label{font-size:11px;letter-spacing:.25em;color:var(--gold);font-weight:500}
+.hero-meta-item .val{font-family:'Noto Serif KR',serif;font-size:22px;font-weight:500;color:var(--cream)}
+
+/* countdown card */
+.countdown-card{
+  background:rgba(245,240,228,.06);
+  border:1px solid rgba(245,240,228,.15);
+  padding:44px 36px;backdrop-filter:blur(12px);
+  position:relative;
+}
+.countdown-card::before{
+  content:"";position:absolute;top:-1px;left:-1px;right:-1px;height:3px;
+  background:linear-gradient(90deg,var(--gold),var(--moss),var(--gold));
+}
+.countdown-label{font-size:12px;letter-spacing:.28em;color:var(--gold);font-weight:600;margin-bottom:14px}
+.countdown-title{font-family:'Noto Serif KR',serif;font-size:22px;font-weight:500;margin-bottom:24px;line-height:1.4}
+.cd-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px}
+.cd-unit{text-align:center;padding:16px 4px;background:rgba(13,31,20,.35);border:1px solid rgba(245,240,228,.08)}
+.cd-num{font-family:'Noto Serif KR',serif;font-size:34px;font-weight:500;color:var(--cream);line-height:1;font-variant-numeric:tabular-nums}
+.cd-label{font-size:10px;letter-spacing:.2em;color:var(--sage);margin-top:8px;font-weight:500}
+.cd-footer{
+  display:flex;justify-content:space-between;align-items:center;
+  padding-top:20px;border-top:1px solid rgba(245,240,228,.12);font-size:13px;color:rgba(245,240,228,.7);
+}
+.cd-footer strong{color:var(--cream);font-weight:500}
+
+/* AWARDS 4 CARDS */
+.awards{background:var(--paper)}
+.awards-head{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:end;margin-bottom:64px}
+.awards-head p{font-size:17px;line-height:1.85;color:#3a4a3f;max-width:500px}
+.awards-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.award-card{
+  background:#fff;border:1px solid var(--line);
+  padding:40px 32px 44px;position:relative;overflow:hidden;
+  transition:transform .4s ease,box-shadow .4s ease,border-color .4s ease;
+}
+.award-card:hover{transform:translateY(-6px);box-shadow:0 24px 50px -20px rgba(13,31,20,.2);border-color:var(--moss)}
+.award-card .num{
+  font-family:'Noto Serif KR',serif;font-size:12px;letter-spacing:.3em;
+  color:var(--gold);font-weight:600;margin-bottom:40px;display:block;
+}
+.award-card .icon{
+  width:64px;height:64px;margin-bottom:32px;
+  display:grid;place-items:center;
+  border:1px solid var(--line-strong);border-radius:50%;
+  color:var(--forest);
+}
+.award-card h3{
+  font-family:'Noto Serif KR',serif;font-size:26px;font-weight:500;
+  color:var(--forest);line-height:1.3;letter-spacing:-.01em;margin-bottom:16px;
+}
+.award-card h3 small{display:block;font-family:'Pretendard Variable';font-size:12px;letter-spacing:.2em;color:var(--gold-dim);font-weight:600;margin-bottom:8px}
+.award-card p{font-size:13.5px;color:#5a6a5f;line-height:1.7}
+.award-card .chip{
+  position:absolute;top:24px;right:24px;
+  font-family:'Noto Serif KR',serif;font-size:40px;color:var(--cream-2);font-weight:500;
+  transition:color .3s;
+}
+.award-card:hover .chip{color:var(--gold)}
+
+/* PURPOSE */
+.purpose{
+  background:var(--cream);
+  background-image:
+    linear-gradient(180deg,var(--paper) 0,var(--cream) 200px,var(--cream) calc(100% - 200px),var(--paper) 100%);
+}
+.purpose-inner{display:grid;grid-template-columns:1fr 1.4fr;gap:100px;align-items:start}
+.purpose-left{position:sticky;top:120px}
+.purpose-right p{font-size:19px;line-height:2;color:#263327;margin-bottom:28px;font-weight:400}
+.purpose-right p:first-child{font-size:24px;line-height:1.8;color:var(--forest);font-weight:500}
+.purpose-right p strong{color:var(--gold-dim);font-weight:600}
+.purpose-quote{
+  margin-top:48px;padding:36px 40px;border-left:3px solid var(--gold);
+  background:rgba(255,255,255,.6);
+  font-family:'Noto Serif KR',serif;font-size:22px;line-height:1.6;color:var(--forest);font-weight:500;
+}
+
+/* JUDGING ESG */
+.judging{background:linear-gradient(180deg,var(--paper) 0%,#f0ead8 100%)}
+.judging-head{text-align:center;margin-bottom:80px}
+.judging-head p{font-size:17px;line-height:1.85;color:#3a4a3f;max-width:720px;margin:24px auto 0}
+.esg-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;margin-bottom:60px}
+.esg-card{
+  background:#fff;padding:48px 40px;position:relative;
+  border:1px solid var(--line);
+  display:flex;flex-direction:column;min-height:520px;
+}
+.esg-card .letter{
+  font-family:'Noto Serif KR',serif;font-size:140px;font-weight:300;line-height:.9;
+  color:var(--forest);letter-spacing:-.04em;
+}
+.esg-card .letter sub{font-size:16px;color:var(--gold);vertical-align:top;letter-spacing:.1em;margin-left:8px;font-weight:500}
+.esg-card h4{font-family:'Noto Serif KR',serif;font-size:26px;font-weight:500;color:var(--forest);margin:16px 0 24px}
+.esg-card ul{list-style:none;flex:1}
+.esg-card li{
+  font-size:14px;color:#4a5a50;padding:10px 0;padding-left:20px;position:relative;
+  border-bottom:1px dashed var(--line);
+}
+.esg-card li:last-child{border:none}
+.esg-card li::before{content:"";position:absolute;left:0;top:18px;width:8px;height:1px;background:var(--gold)}
+.esg-env{background:linear-gradient(180deg,#fff,#f4f7ef)}
+.esg-soc{background:linear-gradient(180deg,#fff,#eef3f0)}
+.esg-gov{background:linear-gradient(180deg,#fff,#f2ede0)}
+.judging-note{
+  text-align:center;padding:32px;background:var(--forest);color:var(--cream);
+  font-size:14px;letter-spacing:.02em;
+}
+.judging-note strong{color:var(--gold);font-weight:600;margin-right:12px;letter-spacing:.15em;font-size:12px}
+
+/* BENEFITS */
+.benefits-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:0;border:1px solid var(--line)}
+.benefit{
+  padding:48px 44px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);
+  display:flex;gap:28px;align-items:flex-start;
+  transition:background .3s;
+}
+.benefit:nth-child(2n){border-right:none}
+.benefit:nth-last-child(-n+2){border-bottom:none}
+.benefit:hover{background:#fff}
+.benefit-num{
+  font-family:'Noto Serif KR',serif;font-size:14px;letter-spacing:.2em;color:var(--gold);
+  font-weight:600;min-width:36px;padding-top:4px;
+}
+.benefit h4{font-family:'Noto Serif KR',serif;font-size:20px;font-weight:500;color:var(--forest);margin-bottom:10px;line-height:1.4}
+.benefit p{font-size:14px;color:#5a6a5f;line-height:1.7}
+
+/* SCHEDULE */
+.schedule{background:var(--forest);color:var(--cream);position:relative;overflow:hidden}
+.schedule::before{
+  content:"";position:absolute;top:-20%;right:-10%;width:600px;height:600px;
+  background:radial-gradient(circle,rgba(182,146,70,.15),transparent 70%);
+  pointer-events:none;
+}
+.schedule .section-title{color:var(--cream)}
+.schedule .eyebrow{color:var(--gold)}
+.schedule-head{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:end;margin-bottom:80px;position:relative;z-index:2}
+.schedule-head p{color:rgba(245,240,228,.7);font-size:17px;line-height:1.85;max-width:500px}
+.timeline{position:relative;z-index:2}
+.timeline-track{
+  position:relative;display:grid;grid-template-columns:repeat(4,1fr);gap:0;
+  border-top:1px solid rgba(245,240,228,.2);
+}
+.tstep{
+  padding:40px 32px 48px;border-right:1px solid rgba(245,240,228,.12);
+  position:relative;cursor:pointer;transition:background .3s;
+}
+.tstep:last-child{border-right:none}
+.tstep:hover{background:rgba(245,240,228,.04)}
+.tstep.active{background:rgba(182,146,70,.08)}
+.tstep::before{
+  content:"";position:absolute;top:-5px;left:40px;width:10px;height:10px;border-radius:50%;
+  background:var(--sage);transition:background .3s,transform .3s;
+}
+.tstep:hover::before,.tstep.active::before{background:var(--gold);transform:scale(1.4)}
+.tstep .step-num{
+  font-family:'Noto Serif KR',serif;font-size:11px;letter-spacing:.3em;
+  color:var(--gold);font-weight:600;margin-bottom:32px;
+}
+.tstep h4{font-family:'Noto Serif KR',serif;font-size:22px;font-weight:500;color:var(--cream);margin-bottom:12px;line-height:1.3}
+.tstep .date{font-size:14px;color:var(--sage);margin-bottom:16px;font-weight:500;letter-spacing:.02em}
+.tstep .desc{font-size:13px;color:rgba(245,240,228,.6);line-height:1.7}
+
+/* WINNERS */
+.winners{background:var(--paper)}
+.winners-head{display:grid;grid-template-columns:1fr auto;gap:60px;align-items:end;margin-bottom:56px}
+.winners-tabs{display:flex;gap:4px;border:1px solid var(--line);background:#fff}
+.wtab{
+  padding:14px 32px;background:transparent;border:none;cursor:pointer;
+  font-family:'Noto Serif KR',serif;font-weight:500;font-size:16px;color:#6a7a6f;
+  transition:all .3s;letter-spacing:.01em;
+}
+.wtab:hover{color:var(--forest)}
+.wtab.active{background:var(--forest);color:var(--cream)}
+.winners-panel{display:none}
+.winners-panel.active{display:block;animation:fadeIn .5s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.winner-row{
+  display:grid;grid-template-columns:200px 180px 1fr;gap:40px;
+  padding:28px 0;border-bottom:1px solid var(--line);align-items:start;
+}
+.winner-row:first-child{border-top:2px solid var(--forest)}
+.winner-cat{
+  font-family:'Noto Serif KR',serif;font-size:14px;font-weight:500;
+  color:var(--forest);letter-spacing:.01em;
+}
+.winner-cat.grand{color:var(--gold-dim)}
+.winner-cat .medal{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--moss);margin-right:10px;vertical-align:middle}
+.winner-cat.grand .medal{background:var(--gold)}
+.winner-badge{
+  display:inline-block;padding:4px 12px;background:var(--cream);
+  font-size:11px;letter-spacing:.2em;color:var(--gold-dim);font-weight:600;
+}
+.winner-names{font-size:16px;color:var(--forest);line-height:1.8;font-weight:500}
+.winner-names .sep{color:var(--line-strong);margin:0 8px}
+
+/* APPLY */
+.apply{background:var(--forest);color:var(--cream);position:relative}
+.apply-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:80px;align-items:center}
+.apply h2{font-family:'Noto Serif KR',serif;font-size:52px;font-weight:500;line-height:1.2;letter-spacing:-.02em;margin:24px 0 32px}
+.apply p{color:rgba(245,240,228,.8);font-size:17px;line-height:1.8;margin-bottom:40px;max-width:520px}
+.apply .eyebrow{color:var(--gold)}
+.contact-card{
+  background:rgba(245,240,228,.06);border:1px solid rgba(245,240,228,.15);
+  padding:44px;
+}
+.contact-card .label{font-size:11px;letter-spacing:.25em;color:var(--gold);font-weight:600;margin-bottom:10px}
+.contact-card .value{font-family:'Noto Serif KR',serif;font-size:20px;color:var(--cream);margin-bottom:28px;line-height:1.5;font-weight:500}
+.contact-card .value.big{font-size:32px;letter-spacing:-.01em}
+.contact-card .divider{height:1px;background:rgba(245,240,228,.15);margin:28px 0}
+.contact-btn{
+  display:inline-block;margin-top:12px;padding:16px 36px;
+  background:var(--gold);color:var(--forest);text-decoration:none;font-weight:600;font-size:14px;
+  letter-spacing:.05em;transition:background .2s;
+}
+.contact-btn:hover{background:#cfa553}
+
+/* ABOUT */
+.about{background:var(--paper)}
+.about-hero{display:grid;grid-template-columns:1fr 1.2fr;gap:80px;align-items:start;margin-bottom:80px}
+.about-hero p{font-size:17px;line-height:1.9;color:#3a4a3f;margin-bottom:24px}
+.about-hero p:first-child{font-family:'Noto Serif KR',serif;font-size:22px;line-height:1.7;color:var(--forest);font-weight:500}
+.vm-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-bottom:60px}
+.vm-card{
+  padding:44px 40px;background:#fff;border:1px solid var(--line);
+  display:flex;flex-direction:column;gap:20px;
+}
+.vm-card .label{
+  font-family:'Noto Serif KR',serif;font-size:48px;color:var(--cream-2);font-weight:500;line-height:1;
+  letter-spacing:-.02em;
+}
+.vm-card .label small{font-family:'Pretendard Variable';font-size:11px;letter-spacing:.3em;color:var(--gold);display:block;margin-top:8px;font-weight:600}
+.vm-card h4{font-family:'Noto Serif KR',serif;font-size:22px;font-weight:500;color:var(--forest);line-height:1.5}
+.vm-card p{font-size:14px;color:#5a6a5f;line-height:1.8}
+
+.why-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;background:var(--line);border:1px solid var(--line)}
+.why-item{background:#fff;padding:40px 32px;display:flex;flex-direction:column;gap:16px}
+.why-item .icon{width:48px;height:48px;color:var(--moss)}
+.why-item h5{font-family:'Noto Serif KR',serif;font-size:18px;font-weight:500;color:var(--forest)}
+.why-item p{font-size:13px;color:#5a6a5f;line-height:1.7}
+
+/* FOOTER */
+.footer{background:#0d1f14;color:rgba(245,240,228,.7);padding:60px 0 40px}
+.footer-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:60px;margin-bottom:48px}
+.footer-logo{font-family:'Noto Serif KR',serif;font-size:20px;font-weight:500;color:var(--cream);margin-bottom:16px}
+.footer p{font-size:13px;line-height:1.8;margin-bottom:6px}
+.footer h5{font-family:'Noto Serif KR',serif;font-size:14px;color:var(--gold);margin-bottom:14px;letter-spacing:.05em}
+.footer-bottom{
+  padding-top:32px;border-top:1px solid rgba(245,240,228,.1);
+  display:flex;justify-content:space-between;font-size:12px;color:rgba(245,240,228,.4);letter-spacing:.05em;
+}
+
+@media(max-width:1024px){
+  .hero-grid,.awards-head,.purpose-inner,.about-hero,.schedule-head,.winners-head,.apply-grid{grid-template-columns:1fr;gap:48px}
+  .awards-grid{grid-template-columns:repeat(2,1fr)}
+  .esg-grid{grid-template-columns:1fr}
+  .benefits-grid{grid-template-columns:1fr}
+  .benefit{border-right:none}
+  .timeline-track{grid-template-columns:1fr}
+  .tstep{border-right:none;border-bottom:1px solid rgba(245,240,228,.12)}
+  .why-grid{grid-template-columns:1fr 1fr}
+  .vm-grid{grid-template-columns:1fr}
+  .nav-links{display:none}
+  .winner-row{grid-template-columns:1fr;gap:12px}
+  .footer-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="#top" class="logo" style="text-decoration:none">
+      <div class="logo-mark">지</div>
+      <div class="logo-text">
+        대한민국 지속가능경영 대상
+        <small>KSM AWARDS 2026</small>
+      </div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#purpose">시상 취지</a></li>
+      <li><a href="#awards">시상 부문</a></li>
+      <li><a href="#judging">심사 방법</a></li>
+      <li><a href="#schedule">일정</a></li>
+      <li><a href="#winners">역대 수상</a></li>
+      <li><a href="#about">한국지속가능경영원</a></li>
+    </ul>
+    <a href="#apply" class="nav-cta">접수 신청</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="top">
+  <svg class="hero-leaf" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M200 20 C260 80 340 140 340 240 C340 320 280 380 200 380 C120 380 60 320 60 240 C60 140 140 80 200 20 Z" stroke="#f5f0e4" stroke-width="1.5" opacity=".5"/>
+    <path d="M200 20 L200 380" stroke="#f5f0e4" stroke-width="1"/>
+    <path d="M200 80 Q140 120 120 200" stroke="#f5f0e4" stroke-width="1" opacity=".6"/>
+    <path d="M200 80 Q260 120 280 200" stroke="#f5f0e4" stroke-width="1" opacity=".6"/>
+    <path d="M200 160 Q130 180 110 260" stroke="#f5f0e4" stroke-width="1" opacity=".6"/>
+    <path d="M200 160 Q270 180 290 260" stroke="#f5f0e4" stroke-width="1" opacity=".6"/>
+    <path d="M200 240 Q140 250 130 310" stroke="#f5f0e4" stroke-width="1" opacity=".6"/>
+    <path d="M200 240 Q260 250 270 310" stroke="#f5f0e4" stroke-width="1" opacity=".6"/>
+  </svg>
+
+  <div class="container">
+    <div class="hero-grid">
+      <div>
+        <span class="eyebrow" style="color:var(--gold)">Korea Sustainability Management Awards 2026</span>
+        <h1>
+          <span class="yr">2026</span><br>
+          대한민국<br>
+          <em>지속가능경영</em> 대상
+        </h1>
+        <p class="hero-sub">
+          글로벌 규제 강화와 디지털 전환이라는 거대한 파도 속에서도,<br>
+          흔들림 없는 혁신으로 내일의 가치를 증명해내는 리더들을 기립니다.
+        </p>
+        <div class="hero-meta">
+          <div class="hero-meta-item">
+            <span class="label">HOST</span>
+            <span class="val">한국기업경영학회</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="label">ORGANIZER</span>
+            <span class="val">한국지속가능경영원</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="label">VENUE</span>
+            <span class="val">건국대학교 경영관</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="countdown-card">
+        <div class="countdown-label">AWARD CEREMONY</div>
+        <div class="countdown-title">2026.06.12 FRI<br>시상식까지 남은 시간</div>
+        <div class="cd-grid" id="cd">
+          <div class="cd-unit"><div class="cd-num" data-u="d">00</div><div class="cd-label">DAYS</div></div>
+          <div class="cd-unit"><div class="cd-num" data-u="h">00</div><div class="cd-label">HOURS</div></div>
+          <div class="cd-unit"><div class="cd-num" data-u="m">00</div><div class="cd-label">MIN</div></div>
+          <div class="cd-unit"><div class="cd-num" data-u="s">00</div><div class="cd-label">SEC</div></div>
+        </div>
+        <div class="cd-footer">
+          <span>접수 마감</span>
+          <strong>2026.05.18 MON</strong>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PURPOSE -->
+<section class="purpose" id="purpose">
+  <div class="container">
+    <div class="purpose-inner">
+      <div class="purpose-left fade">
+        <span class="eyebrow">시상 취지 · Purpose</span>
+        <h2 class="section-title" style="margin-top:24px">내일의 가치를<br>오늘 증명하다.</h2>
+      </div>
+      <div class="purpose-right fade">
+        <p><strong>『2026년 대한민국 지속가능경영 대상』</strong>은 지속가능경영의 본질을 실천하며 새로운 표준을 세워가는 기업과 기관을 발굴하기 위해 마련되었습니다.</p>
+        <p>대기업부터 중소기업, 공공기관까지 ESG 내재화를 실현한 주역들의 성과를 기리고, 경제적 가치와 사회적 책임이 조화롭게 공존하는 대한민국의 <strong>‘더 나은 내일’</strong>을 함께 설계하겠습니다.</p>
+        <div class="purpose-quote">
+          “흔들림 없는 혁신으로<br>
+          내일의 가치를 증명해내는 리더들.”
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AWARDS -->
+<section class="awards" id="awards">
+  <div class="container">
+    <div class="awards-head fade">
+      <div>
+        <span class="eyebrow">시상 부문 · Categories</span>
+        <h2 class="section-title" style="margin-top:24px">네 개의 카테고리,<br>하나의 기준.</h2>
+      </div>
+      <p>대기업, 중견기업, 중소기업, 공공기관 등을 대상으로 지속가능경영 종합대상과 ESG(환경·사회·지배구조) 부문별 대상을 시상합니다.</p>
+    </div>
+
+    <div class="awards-grid">
+      <div class="award-card fade">
+        <span class="chip serif">01</span>
+        <span class="num">CATEGORY 01</span>
+        <div class="icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M12 2L14.5 7.5L20.5 8.5L16 13L17 19L12 16L7 19L8 13L3.5 8.5L9.5 7.5L12 2Z"/></svg>
+        </div>
+        <h3><small>GRAND PRIZE</small>지속가능경영<br>대상</h3>
+        <p>ESG 전 영역에서 탁월한 성과를 이룬 기업·기관에 수여하는 최고의 영예.</p>
+      </div>
+
+      <div class="award-card fade">
+        <span class="chip serif">02</span>
+        <span class="num">CATEGORY 02</span>
+        <div class="icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M12 3C8 7 5 10 5 14C5 18 8 21 12 21C16 21 19 18 19 14C19 10 16 7 12 3Z"/><path d="M12 10C10 12 9 13 9 15"/></svg>
+        </div>
+        <h3><small>ENVIRONMENT</small>환경 부문<br>대상</h3>
+        <p>기후변화·자원순환·에너지·친환경 공급망 등 환경 혁신을 선도한 주체.</p>
+      </div>
+
+      <div class="award-card fade">
+        <span class="chip serif">03</span>
+        <span class="num">CATEGORY 03</span>
+        <div class="icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><circle cx="9" cy="8" r="3"/><circle cx="16" cy="10" r="2.5"/><path d="M3 20C3 16.5 5.5 14 9 14C12.5 14 15 16.5 15 20"/><path d="M13 20C13 17.5 14.5 16 16 16C18 16 19.5 17.5 19.5 20"/></svg>
+        </div>
+        <h3><small>SOCIAL</small>사회 부문<br>대상</h3>
+        <p>인재경영·노동·인권·다양성·상생 등 사회적 책임을 실천한 주체.</p>
+      </div>
+
+      <div class="award-card fade">
+        <span class="chip serif">04</span>
+        <span class="num">CATEGORY 04</span>
+        <div class="icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="4" y="10" width="16" height="10"/><path d="M4 10L12 4L20 10"/><path d="M8 20V14M12 20V14M16 20V14"/></svg>
+        </div>
+        <h3><small>GOVERNANCE</small>지배구조 부문<br>대상</h3>
+        <p>투명성·이사회 활동·준법·리스크 관리 체계를 모범적으로 구축한 주체.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- JUDGING -->
+<section class="judging" id="judging">
+  <div class="container">
+    <div class="judging-head fade">
+      <span class="eyebrow">심사 방법 · Evaluation</span>
+      <h2 class="section-title" style="margin-top:24px">E · S · G, 세 개의 축으로 평가합니다.</h2>
+      <p>한국지속가능경영원의 ESG 평가지표를 활용하여 기업이 발간한 지속가능경영보고서를 기반으로,<br>ESG 분야 교수 및 전문가로 구성된 심의위원회가 공정한 심사와 평가를 진행합니다.</p>
+    </div>
+
+    <div class="esg-grid">
+      <div class="esg-card esg-env fade">
+        <div class="letter">E<sub>nvironment</sub></div>
+        <h4>환경</h4>
+        <ul>
+          <li>환경경영 전략 및 목표</li>
+          <li>환경 리스크 관리</li>
+          <li>기후변화 대응</li>
+          <li>자원 순환 체계</li>
+          <li>에너지 효율화</li>
+          <li>친환경 공급망</li>
+          <li>친환경 제품 및 서비스</li>
+          <li>환경 정보 공개</li>
+        </ul>
+      </div>
+      <div class="esg-card esg-soc fade">
+        <div class="letter">S<sub>ocial</sub></div>
+        <h4>사회</h4>
+        <ul>
+          <li>사회적 책임 전략</li>
+          <li>인재 경영</li>
+          <li>소비자 보호</li>
+          <li>정보 보호</li>
+          <li>파트너 상생</li>
+          <li>사회 공헌</li>
+          <li>노동 및 인권</li>
+          <li>다양성 · 안전보건</li>
+        </ul>
+      </div>
+      <div class="esg-card esg-gov fade">
+        <div class="letter">G<sub>overnance</sub></div>
+        <h4>지배구조</h4>
+        <ul>
+          <li>기업 투명성</li>
+          <li>이사회 활동</li>
+          <li>준법 경영</li>
+          <li>리스크 관리</li>
+          <li>윤리 경영</li>
+          <li>주주 권리 보호</li>
+          <li>감사 기구 독립성</li>
+          <li>ESG 공시 수준</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="judging-note fade">
+      <strong>심사 자료</strong> 2024 ~ 2025년 발간된 지속가능경영보고서 또는 ESG 공적서
+    </div>
+  </div>
+</section>
+
+<!-- BENEFITS -->
+<section id="benefits" style="background:var(--paper)">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:72px" class="fade">
+      <span class="eyebrow">시상 혜택 · Benefits</span>
+      <h2 class="section-title" style="margin-top:24px">수상, 그 이상의 가치.</h2>
+    </div>
+    <div class="benefits-grid fade">
+      <div class="benefit">
+        <div class="benefit-num">01</div>
+        <div>
+          <h4>언론·학회 보도</h4>
+          <p>학회 및 주요 언론을 통한 기업·기관의 지속가능경영 활동 보도 확산.</p>
+        </div>
+      </div>
+      <div class="benefit">
+        <div class="benefit-num">02</div>
+        <div>
+          <h4>인증패 및 트로피</h4>
+          <p>지속가능경영 우수기업 공식 인증패 및 트로피 수여.</p>
+        </div>
+      </div>
+      <div class="benefit">
+        <div class="benefit-num">03</div>
+        <div>
+          <h4>세미나·포럼 초청</h4>
+          <p>국내외 지속가능경영 세미나 및 포럼 등 주요 행사 초청.</p>
+        </div>
+      </div>
+      <div class="benefit">
+        <div class="benefit-num">04</div>
+        <div>
+          <h4>서비스 이용 혜택</h4>
+          <p>한국지속가능경영원의 ESG 컨설팅·보고서·검증·교육 등 주요 서비스 비용 할인.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SCHEDULE -->
+<section class="schedule" id="schedule">
+  <div class="container">
+    <div class="schedule-head fade">
+      <div>
+        <span class="eyebrow">시상 절차 · Schedule</span>
+        <h2 class="section-title" style="margin-top:24px">네 단계의 엄정한 프로세스.</h2>
+      </div>
+      <p>지속가능경영 평가부터 시상식까지, 투명하고 공정한 심사를 거쳐 대한민국의 새로운 표준을 가려냅니다.</p>
+    </div>
+
+    <div class="timeline">
+      <div class="timeline-track">
+        <div class="tstep active" data-step="1">
+          <div class="step-num">STEP 01</div>
+          <h4>지속가능경영 평가</h4>
+          <div class="date">~ 5.18 (월)</div>
+          <div class="desc">한국지속가능경영원이 ESG 평가지표를 활용하여 기업·기관의 보고서를 정량·정성 분석합니다.</div>
+        </div>
+        <div class="tstep" data-step="2">
+          <div class="step-num">STEP 02</div>
+          <h4>심사위원회 평가</h4>
+          <div class="date">~ 5.22 (금)</div>
+          <div class="desc">ESG 분야 교수 및 전문가로 구성된 심의위원회가 공정한 심사를 거쳐 수상 기업을 최종 선정합니다.</div>
+        </div>
+        <div class="tstep" data-step="3">
+          <div class="step-num">STEP 03</div>
+          <h4>수상 안내</h4>
+          <div class="date">~ 5.25 (월)</div>
+          <div class="desc">수상 대상 기업·기관에 결과를 안내하고, 시상식 참여 관련 세부 사항을 공유합니다.</div>
+        </div>
+        <div class="tstep" data-step="4">
+          <div class="step-num">STEP 04</div>
+          <h4>시상식</h4>
+          <div class="date">6.12 (금)</div>
+          <div class="desc">건국대학교 경영관에서 2026 대한민국 지속가능경영 대상 시상식이 개최됩니다.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WINNERS -->
+<section class="winners" id="winners">
+  <div class="container">
+    <div class="winners-head fade">
+      <div>
+        <span class="eyebrow">역대 수상 기업 · Winners</span>
+        <h2 class="section-title" style="margin-top:24px">역대 수상 기업·기관.</h2>
+      </div>
+      <div class="winners-tabs">
+        <button class="wtab active" data-year="2023">2023</button>
+        <button class="wtab" data-year="2024">2024</button>
+        <button class="wtab" data-year="2025">2025</button>
+      </div>
+    </div>
+
+    <div class="winners-panel active" data-panel="2023">
+      <div class="winner-row">
+        <div class="winner-cat grand"><span class="medal"></span>지속가능경영 대상</div>
+        <div><span class="winner-badge">GRAND</span></div>
+        <div class="winner-names">부산항만공사</div>
+      </div>
+      <div class="winner-row">
+        <div class="winner-cat"><span class="medal"></span>환경 부문 대상</div>
+        <div><span class="winner-badge">ENV</span></div>
+        <div class="winner-names">여수광양항만공사<span class="sep">·</span>인천항만공사<span class="sep">·</span>(주)해양에너지</div>
+      </div>
+      <div class="winner-row">
+        <div class="winner-cat"><span class="medal"></span>사회 부문 대상</div>
+        <div><span class="winner-badge">SOC</span></div>
+        <div class="winner-names">한국고용정보원<span class="sep">·</span>해양환경공단<span class="sep">·</span>시앤피컨설팅<span class="sep">·</span>(주)모션<span class="sep">·</span>퍼솔켈리코리아</div>
+      </div>
+      <div class="winner-row">
+        <div class="winner-cat"><span class="medal"></span>지배구조 부문 대상</div>
+        <div><span class="winner-badge">GOV</span></div>
+        <div class="winner-names">대한무역투자진흥공사<span class="sep">·</span>한국어촌어항공단<span class="sep">·</span>현대엘리베이터</div>
+      </div>
+    </div>
+
+    <div class="winners-panel" data-panel="2024">
+      <div class="winner-row">
+        <div class="winner-cat grand"><span class="medal"></span>지속가능경영 대상</div>
+        <div><span class="winner-badge">GRAND</span></div>
+        <div class="winner-names">한국어촌어항공단</div>
+      </div>
+      <div class="winner-row">
+        <div class="winner-cat"><span class="medal"></span>환경 부문 대상</div>
+        <div><span class="winner-badge">ENV</span></div>
+        <div class="winner-names">울산항만공사</div>
+      </div>
+      <div class="winner-row">
+        <div class="winner-cat"><span class="medal"></span>사회 부문 대상</div>
+        <div><span class="winner-badge">SOC</span></div>
+        <div class="winner-names">아동권리보장원</div>
+      </div>
+    </div>
+
+    <div class="winners-panel" data-panel="2025">
+      <div class="winner-row">
+        <div class="winner-cat grand"><span class="medal"></span>지속가능경영 대상</div>
+        <div><span class="winner-badge">GRAND</span></div>
+        <div class="winner-names">한국토지주택공사</div>
+      </div>
+      <div class="winner-row">
+        <div class="winner-cat"><span class="medal"></span>환경 부문 대상</div>
+        <div><span class="winner-badge">ENV</span></div>
+        <div class="winner-names">KT<span class="sep">·</span>국토안전관리원<span class="sep">·</span>부산항만공사</div>
+      </div>
+      <div class="winner-row">
+        <div class="winner-cat"><span class="medal"></span>사회 부문 대상</div>
+        <div><span class="winner-badge">SOC</span></div>
+        <div class="winner-names">한국산업인력공단<span class="sep">·</span>한국교통안전공단</div>
+      </div>
+      <div class="winner-row">
+        <div class="winner-cat"><span class="medal"></span>지배구조 부문 대상</div>
+        <div><span class="winner-badge">GOV</span></div>
+        <div class="winner-names">KOTRA<span class="sep">·</span>여수광양항만공사<span class="sep">·</span>SR</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- APPLY -->
+<section class="apply" id="apply">
+  <div class="container">
+    <div class="apply-grid">
+      <div class="fade">
+        <span class="eyebrow">접수 및 문의 · Apply</span>
+        <h2>지금,<br>참여하세요.</h2>
+        <p>참여를 희망하시는 기업·기관은 2024 ~ 2025년 발간된 지속가능경영보고서(PDF 파일)를 한국지속가능경영원으로 보내주시기 바랍니다.</p>
+      </div>
+      <div class="contact-card fade">
+        <div class="label">2026 사무국</div>
+        <div class="value big">02-450-4248</div>
+        <div class="divider"></div>
+        <div class="label">이메일 접수</div>
+        <div class="value">ksmi@konkuk.ac.kr</div>
+        <div class="label" style="margin-top:8px">공식 웹사이트</div>
+        <div class="value">www.kismesg.com</div>
+        <a href="mailto:ksmi@konkuk.ac.kr" class="contact-btn">보고서 제출하기 →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="container">
+    <div class="about-hero fade">
+      <div>
+        <span class="eyebrow">주최·주관 · About</span>
+        <h2 class="section-title" style="margin-top:24px">한국지속가능<br>경영원.</h2>
+      </div>
+      <div>
+        <p>전략적 ESG 경영을 통해 기업의 지속가능한 성장을 견인하는 선도 기관입니다.</p>
+        <p>AI 기술과 최신 트렌드를 결합한 정밀 진단·분석·보고서 발간·평가 대응까지 아우르는 통합 ESG 매니지먼트를 지원합니다. 매년 ‘대한민국 지속가능경영 대상’을 개최하여 사회적 책임을 다하는 우수 기업과 기관을 발굴함으로써 대한민국 지속가능경영의 올바른 이정표를 제시합니다.</p>
+      </div>
+    </div>
+
+    <div class="vm-grid fade">
+      <div class="vm-card">
+        <div class="label">V<small>ISION</small></div>
+        <h4>지속가능한 미래를 위한<br>혁신과 도전.</h4>
+      </div>
+      <div class="vm-card">
+        <div class="label">M<small>ISSION</small></div>
+        <h4>지속가능경영 플랫폼으로<br>기업 경쟁력 강화 및 사회적 가치 창출.</h4>
+        <p>중견·중소기업 및 공공기관 ESG 내재화 지원을 통한 기업가치 향상, 디지털 플랫폼으로 더 많은 기업에 저비용 고품질 ESG 컨설팅 제공.</p>
+      </div>
+    </div>
+
+    <div style="text-align:center;margin-top:80px;margin-bottom:40px" class="fade">
+      <span class="eyebrow">Why KSMI</span>
+      <h3 class="section-title" style="font-size:36px;margin-top:16px">한국지속가능경영원을 선택하는 이유.</h3>
+    </div>
+
+    <div class="why-grid fade">
+      <div class="why-item">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M3 12h4l2-8 4 16 2-8h6"/></svg>
+        <h5>컨설팅 혁신</h5>
+        <p>AI와 빅데이터를 활용하여 빠르고 정확한 ESG 평가 및 보고서를 제공합니다.</p>
+      </div>
+      <div class="why-item">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M4 7h16M4 12h16M4 17h10"/><circle cx="19" cy="17" r="2"/></svg>
+        <h5>확장 가능한 솔루션</h5>
+        <p>모든 기업에 활용 가능한 유연한 솔루션은 모든 비즈니스 규모에 적합합니다.</p>
+      </div>
+      <div class="why-item">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 4 6 4 9s-1 6-4 9c-3-3-4-6-4-9s1-6 4-9Z"/></svg>
+        <h5>글로벌 전문성</h5>
+        <p>전문가 그룹을 통해 지속가능성 관리에 대한 다년간의 경험과 글로벌 관점을 제공합니다.</p>
+      </div>
+      <div class="why-item">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+        <h5>비용 효율성</h5>
+        <p>자동화된 프로세스를 통해 저비용으로 고품질 서비스를 제공합니다.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">한국지속가능경영원</div>
+        <p>서울시 광진구 능동로 120 경영관 415호</p>
+        <p>전화 02-450-4248 · 이메일 ksmi@konkuk.ac.kr</p>
+        <p>www.kismesg.com</p>
+      </div>
+      <div>
+        <h5>SITEMAP</h5>
+        <p><a href="#purpose" style="color:inherit;text-decoration:none">시상 취지</a></p>
+        <p><a href="#awards" style="color:inherit;text-decoration:none">시상 부문</a></p>
+        <p><a href="#judging" style="color:inherit;text-decoration:none">심사 방법</a></p>
+        <p><a href="#schedule" style="color:inherit;text-decoration:none">시상 절차</a></p>
+      </div>
+      <div>
+        <h5>HOST · ORGANIZER</h5>
+        <p>한국기업경영학회</p>
+        <p>한국지속가능경영원</p>
+        <p style="margin-top:14px;color:rgba(245,240,228,.4);font-size:11px">KSM AWARDS 2026</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 한국지속가능경영원 All rights reserved.</span>
+      <span>2026 대한민국 지속가능경영 대상</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Countdown
+const target=new Date('2026-06-12T14:00:00+09:00').getTime();
+function tick(){
+  const n=Date.now(),d=target-n;
+  const days=Math.max(0,Math.floor(d/864e5));
+  const hrs=Math.max(0,Math.floor(d/36e5)%24);
+  const min=Math.max(0,Math.floor(d/6e4)%60);
+  const sec=Math.max(0,Math.floor(d/1e3)%60);
+  document.querySelector('[data-u=d]').textContent=String(days).padStart(2,'0');
+  document.querySelector('[data-u=h]').textContent=String(hrs).padStart(2,'0');
+  document.querySelector('[data-u=m]').textContent=String(min).padStart(2,'0');
+  document.querySelector('[data-u=s]').textContent=String(sec).padStart(2,'0');
+}
+tick();setInterval(tick,1000);
+
+// Fade-in observer
+const io=new IntersectionObserver(es=>es.forEach(e=>e.isIntersecting&&e.target.classList.add('in')),{threshold:.15});
+document.querySelectorAll('.fade').forEach(el=>io.observe(el));
+
+// Winners tabs
+document.querySelectorAll('.wtab').forEach(b=>b.addEventListener('click',()=>{
+  const y=b.dataset.year;
+  document.querySelectorAll('.wtab').forEach(x=>x.classList.toggle('active',x===b));
+  document.querySelectorAll('.winners-panel').forEach(p=>p.classList.toggle('active',p.dataset.panel===y));
+}));
+
+// Timeline hover
+document.querySelectorAll('.tstep').forEach(s=>{
+  s.addEventListener('mouseenter',()=>{
+    document.querySelectorAll('.tstep').forEach(x=>x.classList.remove('active'));
+    s.classList.add('active');
+  });
+});
+</script>
+
+</body>
+</html>

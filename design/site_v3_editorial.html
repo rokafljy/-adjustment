@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026 대한민국 지속가능경영 대상 · Editorial</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" rel="stylesheet">
+<style>
+:root{
+  --paper:#ecebe4;
+  --paper-2:#e2e0d4;
+  --ink:#1a2219;
+  --moss:#3d5a3a;
+  --leaf:#5a7a4e;
+  --olive:#8a9a6b;
+  --earth:#8c6e3a;
+  --rust:#b85c3a;
+  --line:rgba(26,34,25,.2);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Pretendard Variable','Pretendard',-apple-system,sans-serif;
+  background:var(--paper);color:var(--ink);line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+}
+.serif{font-family:'Nanum Myeongjo',serif}
+.mono{font-family:'IBM Plex Mono',monospace;font-feature-settings:"tnum"}
+.container{max-width:1380px;margin:0 auto;padding:0 40px}
+section{padding:140px 0;position:relative}
+.fade{opacity:0;transform:translateY(30px);transition:opacity .9s ease,transform .9s ease}
+.fade.in{opacity:1;transform:none}
+.marker{
+  font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.15em;
+  text-transform:uppercase;color:var(--moss);display:flex;align-items:center;gap:12px;
+}
+.marker::before{content:"";width:20px;height:1px;background:var(--moss)}
+
+/* NAV */
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  padding:20px 40px;display:flex;justify-content:space-between;align-items:center;
+  background:rgba(236,235,228,.92);backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--line);
+}
+.nav .brand{font-family:'Nanum Myeongjo',serif;font-size:16px;font-weight:800;letter-spacing:-.01em}
+.nav .brand small{display:block;font-family:'IBM Plex Mono';font-size:10px;letter-spacing:.2em;color:var(--moss);font-weight:400;margin-top:2px}
+.nav-links{display:flex;gap:32px;list-style:none;font-size:13px;font-weight:500}
+.nav-links a{color:var(--ink);text-decoration:none;transition:opacity .2s}
+.nav-links a:hover{opacity:.5}
+.nav-num{font-family:'IBM Plex Mono';font-size:12px;color:var(--moss);letter-spacing:.1em}
+
+/* HERO - Newspaper masthead */
+.hero{
+  padding:140px 0 80px;position:relative;overflow:hidden;
+  background:
+    radial-gradient(1200px 400px at 30% 100%,rgba(61,90,58,.08),transparent 70%),
+    var(--paper);
+}
+.masthead{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:16px 0;border-top:3px solid var(--ink);border-bottom:1px solid var(--ink);
+  font-family:'IBM Plex Mono';font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+  margin-bottom:60px;
+}
+.masthead .c{display:flex;gap:28px}
+.hero-title{
+  font-family:'Nanum Myeongjo',serif;font-weight:800;
+  font-size:clamp(72px,11vw,184px);line-height:.9;letter-spacing:-.04em;
+  margin-bottom:40px;
+}
+.hero-title .ln1{color:var(--moss);font-weight:400;font-size:.5em;letter-spacing:-.01em;line-height:1;display:block;margin-bottom:16px}
+.hero-title em{font-style:italic;color:var(--rust);font-weight:800}
+.hero-deck{
+  display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:48px;padding:40px 0;
+  border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+  margin-bottom:60px;
+}
+.hero-deck .lede{
+  font-family:'Nanum Myeongjo',serif;font-size:22px;line-height:1.6;color:var(--ink);
+}
+.hero-deck .lede::first-letter{
+  float:left;font-size:60px;line-height:.9;font-weight:800;
+  padding:6px 10px 0 0;color:var(--rust);
+}
+.hero-col{border-left:1px solid var(--line);padding-left:32px}
+.hero-col .k{font-family:'IBM Plex Mono';font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--moss);margin-bottom:8px}
+.hero-col .v{font-family:'Nanum Myeongjo',serif;font-size:18px;font-weight:700;margin-bottom:18px;line-height:1.4}
+.hero-col .v:last-child{margin-bottom:0}
+
+.hero-bot{display:grid;grid-template-columns:1.4fr 1fr;gap:60px;align-items:center}
+.hero-bot-fig{
+  aspect-ratio:16/10;
+  background:
+    linear-gradient(180deg,rgba(26,34,25,.4) 0%,transparent 40%),
+    linear-gradient(180deg,transparent 60%,rgba(26,34,25,.7) 100%),
+    linear-gradient(135deg,#4a6b3f 0%,#2a4224 40%,#1a2f1a 100%);
+  position:relative;overflow:hidden;padding:40px;
+  display:flex;flex-direction:column;justify-content:space-between;color:var(--paper);
+}
+.hero-bot-fig svg{position:absolute;inset:0;width:100%;height:100%;opacity:.25}
+.hero-bot-fig .cap{font-family:'IBM Plex Mono';font-size:11px;letter-spacing:.15em;text-transform:uppercase;position:relative;z-index:2}
+.hero-bot-fig .fq{
+  font-family:'Nanum Myeongjo',serif;font-size:36px;line-height:1.3;font-weight:700;
+  letter-spacing:-.01em;position:relative;z-index:2;
+}
+.hero-bot-fig .fq em{font-style:italic;color:#d4c689}
+
+.cd-box{
+  background:var(--ink);color:var(--paper);padding:36px;border-radius:0;
+}
+.cd-box .hd{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;padding-bottom:16px;border-bottom:1px solid rgba(236,235,228,.2)}
+.cd-box .hd .t{font-family:'IBM Plex Mono';font-size:11px;letter-spacing:.2em;color:#d4c689;text-transform:uppercase}
+.cd-box .hd .d{font-family:'Nanum Myeongjo',serif;font-size:14px;color:rgba(236,235,228,.7)}
+.cd-box h3{font-family:'Nanum Myeongjo',serif;font-size:20px;font-weight:700;margin-bottom:24px;line-height:1.4}
+.cd-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.cd-u{text-align:center;border:1px solid rgba(236,235,228,.15);padding:14px 4px}
+.cd-n{font-family:'Nanum Myeongjo',serif;font-size:32px;font-weight:700;line-height:1;color:#d4c689}
+.cd-l{font-family:'IBM Plex Mono';font-size:9px;letter-spacing:.2em;color:rgba(236,235,228,.5);margin-top:6px;text-transform:uppercase}
+
+/* PURPOSE - Editorial spread */
+.purpose{background:var(--paper-2);padding:160px 0}
+.pg{display:grid;grid-template-columns:2.5fr 1fr;gap:80px}
+.pg .col-r{border-left:1px solid var(--line);padding-left:40px;position:sticky;top:120px;align-self:start}
+.pg h2.hd{font-family:'Nanum Myeongjo',serif;font-size:clamp(36px,4.5vw,68px);line-height:1.1;letter-spacing:-.03em;font-weight:800;margin-bottom:48px}
+.pg h2.hd em{font-style:italic;color:var(--rust)}
+.pg-body{columns:2;column-gap:48px;column-rule:1px solid var(--line)}
+.pg-body p{font-size:16px;line-height:1.9;color:var(--ink);margin-bottom:20px;break-inside:avoid}
+.pg-body p:first-child::first-letter{
+  font-family:'Nanum Myeongjo',serif;float:left;font-size:68px;line-height:.9;font-weight:800;padding:8px 10px 0 0;color:var(--rust);
+}
+.pg-body p strong{color:var(--moss);font-weight:700}
+.pg .col-r .marker{margin-bottom:24px}
+.pg .col-r .pull{
+  font-family:'Nanum Myeongjo',serif;font-size:22px;line-height:1.5;font-weight:700;color:var(--moss);
+  padding-bottom:24px;border-bottom:1px solid var(--line);margin-bottom:24px;
+}
+.pg .col-r .meta{font-family:'IBM Plex Mono';font-size:11px;line-height:2;color:var(--ink);letter-spacing:.05em}
+.pg .col-r .meta strong{color:var(--moss)}
+
+/* AWARDS - Index cards */
+.awards{background:var(--paper);padding:160px 0}
+.awards-head{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:end;margin-bottom:72px;padding-bottom:40px;border-bottom:1px solid var(--line)}
+.awards-head h2{font-family:'Nanum Myeongjo',serif;font-size:clamp(40px,5vw,80px);line-height:1.05;letter-spacing:-.03em;font-weight:800}
+.awards-head h2 em{font-style:italic;color:var(--rust)}
+.awards-head p{font-family:'Nanum Myeongjo',serif;font-size:17px;line-height:1.85;max-width:480px}
+.awards-list{display:grid;grid-template-columns:1fr;gap:0}
+.aitem{
+  display:grid;grid-template-columns:120px 1.2fr 2fr 100px;
+  gap:48px;align-items:center;
+  padding:44px 0;border-bottom:1px solid var(--line);
+  transition:background .3s,padding .3s;
+  position:relative;
+}
+.aitem:hover{padding-left:24px;background:rgba(61,90,58,.04)}
+.aitem .n{font-family:'Nanum Myeongjo',serif;font-size:88px;font-weight:800;color:var(--paper-2);line-height:.9;letter-spacing:-.04em;transition:color .3s}
+.aitem:hover .n{color:var(--rust)}
+.aitem .lbl{font-family:'IBM Plex Mono';font-size:11px;letter-spacing:.2em;color:var(--moss);text-transform:uppercase;margin-bottom:10px}
+.aitem h3{font-family:'Nanum Myeongjo',serif;font-size:32px;font-weight:800;letter-spacing:-.02em;line-height:1.2}
+.aitem p{font-size:14.5px;color:var(--ink);line-height:1.7;max-width:500px}
+.aitem .arr{
+  width:48px;height:48px;border:1px solid var(--line);border-radius:50%;
+  display:grid;place-items:center;transition:all .3s;justify-self:end;
+}
+.aitem:hover .arr{background:var(--ink);color:var(--paper);border-color:var(--ink);transform:rotate(-45deg)}
+
+/* JUDGING */
+.judging{background:var(--ink);color:var(--paper);padding:160px 0}
+.judging .marker{color:#d4c689}
+.judging .marker::before{background:#d4c689}
+.judging-head{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:end;margin-bottom:72px}
+.judging-head h2{font-family:'Nanum Myeongjo',serif;font-size:clamp(40px,5vw,84px);line-height:1.05;letter-spacing:-.03em;font-weight:800}
+.judging-head h2 em{font-style:italic;color:#d4c689}
+.judging-head p{font-family:'Nanum Myeongjo',serif;font-size:17px;line-height:1.85;color:rgba(236,235,228,.75);max-width:480px}
+.esg-row{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:1px solid rgba(236,235,228,.2);border-bottom:1px solid rgba(236,235,228,.2)}
+.esg-col{padding:56px 40px;border-right:1px solid rgba(236,235,228,.2);transition:background .3s}
+.esg-col:last-child{border-right:none}
+.esg-col:hover{background:rgba(212,198,137,.06)}
+.esg-col .big{
+  font-family:'Nanum Myeongjo',serif;font-size:160px;font-weight:800;line-height:.85;
+  letter-spacing:-.06em;color:#d4c689;margin-bottom:24px;
+}
+.esg-col .big em{font-style:italic;font-size:.25em;color:rgba(236,235,228,.5);font-weight:400;letter-spacing:.05em;vertical-align:super}
+.esg-col h4{font-family:'Nanum Myeongjo',serif;font-size:28px;font-weight:800;margin-bottom:24px}
+.esg-col ul{list-style:none}
+.esg-col li{
+  font-size:14px;padding:10px 0;border-top:1px dashed rgba(236,235,228,.15);
+  color:rgba(236,235,228,.85);display:flex;gap:12px;
+}
+.esg-col li:first-child{border:none}
+.esg-col li::before{content:"—";color:#d4c689;flex-shrink:0}
+.judging-note{
+  margin-top:48px;padding:24px 32px;border:1px dashed rgba(236,235,228,.3);
+  display:flex;align-items:center;gap:20px;font-family:'Nanum Myeongjo',serif;font-size:15px;
+}
+.judging-note strong{
+  font-family:'IBM Plex Mono';font-size:10px;letter-spacing:.2em;background:#d4c689;color:var(--ink);
+  padding:6px 12px;font-weight:500;text-transform:uppercase;
+}
+
+/* BENEFITS */
+.benefits{padding:160px 0;background:var(--paper)}
+.benefits-head{text-align:center;margin-bottom:80px}
+.benefits-head h2{font-family:'Nanum Myeongjo',serif;font-size:clamp(40px,5vw,76px);line-height:1.05;letter-spacing:-.03em;font-weight:800;margin-top:20px}
+.benefits-head h2 em{font-style:italic;color:var(--rust)}
+.bgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:0;border-top:1px solid var(--line);border-left:1px solid var(--line)}
+.bitem{
+  padding:52px 44px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);
+  display:grid;grid-template-columns:80px 1fr;gap:32px;align-items:start;transition:background .3s;
+}
+.bitem:hover{background:rgba(61,90,58,.04)}
+.bitem .fig{
+  font-family:'Nanum Myeongjo',serif;font-size:64px;font-weight:800;line-height:.9;
+  color:var(--rust);letter-spacing:-.04em;
+}
+.bitem h4{font-family:'Nanum Myeongjo',serif;font-size:24px;font-weight:800;margin-bottom:12px;letter-spacing:-.01em}
+.bitem p{font-size:15px;color:var(--ink);line-height:1.8}
+
+/* SCHEDULE - timeline as newspaper strip */
+.schedule{background:var(--paper-2);padding:160px 0}
+.schedule-head{margin-bottom:80px}
+.schedule-head h2{font-family:'Nanum Myeongjo',serif;font-size:clamp(40px,5vw,84px);line-height:1.05;letter-spacing:-.03em;font-weight:800;margin:20px 0 24px}
+.schedule-head h2 em{font-style:italic;color:var(--rust)}
+.schedule-head p{font-family:'Nanum Myeongjo',serif;font-size:17px;line-height:1.85;max-width:640px}
+.tline{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-top:2px solid var(--ink)}
+.tstep{
+  padding:48px 32px;border-right:1px solid var(--line);position:relative;cursor:pointer;
+  transition:all .35s;
+}
+.tstep:last-child{border-right:none}
+.tstep::before{
+  content:"";position:absolute;top:-8px;left:32px;width:14px;height:14px;
+  background:var(--paper-2);border:2px solid var(--ink);border-radius:50%;transition:all .3s;
+}
+.tstep:hover::before,.tstep.active::before{background:var(--rust);border-color:var(--rust);transform:scale(1.2)}
+.tstep:hover,.tstep.active{background:var(--paper)}
+.tstep .s{font-family:'IBM Plex Mono';font-size:10px;letter-spacing:.25em;color:var(--moss);margin-bottom:32px;text-transform:uppercase}
+.tstep h4{font-family:'Nanum Myeongjo',serif;font-size:24px;font-weight:800;margin-bottom:14px;letter-spacing:-.01em;line-height:1.2}
+.tstep .d{font-family:'IBM Plex Mono';font-size:13px;color:var(--rust);margin-bottom:16px;letter-spacing:.02em}
+.tstep p{font-size:13.5px;color:var(--ink);line-height:1.7}
+
+/* WINNERS */
+.winners{background:var(--paper);padding:160px 0}
+.winners-head{display:grid;grid-template-columns:1fr auto;gap:40px;align-items:end;margin-bottom:56px;padding-bottom:32px;border-bottom:1px solid var(--line)}
+.winners-head h2{font-family:'Nanum Myeongjo',serif;font-size:clamp(40px,5vw,80px);line-height:1.05;letter-spacing:-.03em;font-weight:800;margin-top:20px}
+.winners-head h2 em{font-style:italic;color:var(--rust)}
+.wtabs{display:flex;gap:0;border:1px solid var(--ink)}
+.wtab{
+  padding:14px 28px;background:transparent;border:none;cursor:pointer;
+  font-family:'Nanum Myeongjo',serif;font-weight:800;font-size:18px;color:var(--ink);
+  border-right:1px solid var(--line);transition:all .2s;
+}
+.wtab:last-child{border-right:none}
+.wtab.active{background:var(--ink);color:#d4c689}
+.wpanel{display:none}
+.wpanel.active{display:block;animation:fadeIn .4s ease}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.wrow{
+  display:grid;grid-template-columns:60px 200px 100px 1fr;gap:40px;
+  padding:32px 0;border-bottom:1px solid var(--line);align-items:baseline;
+}
+.wrow:last-child{border-bottom:none}
+.wrow .idx{font-family:'IBM Plex Mono';font-size:13px;color:var(--moss)}
+.wrow .cat{font-family:'Nanum Myeongjo',serif;font-size:20px;font-weight:800;letter-spacing:-.01em}
+.wrow .cat.grand{color:var(--rust)}
+.wrow .bdg{font-family:'IBM Plex Mono';font-size:10px;letter-spacing:.2em;color:var(--moss);text-transform:uppercase}
+.wrow .names{font-family:'Nanum Myeongjo',serif;font-size:20px;font-weight:700;line-height:1.5}
+.wrow .names .sep{color:var(--line);margin:0 10px;font-weight:400}
+
+/* APPLY */
+.apply{padding:160px 0;background:var(--ink);color:var(--paper);position:relative;overflow:hidden}
+.apply::before{
+  content:"대상";position:absolute;right:-40px;bottom:-180px;
+  font-family:'Nanum Myeongjo',serif;font-size:480px;font-weight:800;
+  color:rgba(212,198,137,.05);line-height:.8;letter-spacing:-.05em;pointer-events:none;
+}
+.apply .marker{color:#d4c689}
+.apply .marker::before{background:#d4c689}
+.apply-grid{display:grid;grid-template-columns:1.3fr 1fr;gap:80px;align-items:center;position:relative;z-index:2}
+.apply h2{font-family:'Nanum Myeongjo',serif;font-size:clamp(44px,6vw,104px);line-height:1;letter-spacing:-.04em;font-weight:800;margin:24px 0 40px}
+.apply h2 em{font-style:italic;color:#d4c689}
+.apply p{font-family:'Nanum Myeongjo',serif;font-size:18px;line-height:1.8;color:rgba(236,235,228,.75);margin-bottom:40px;max-width:520px}
+.apply-btn{
+  display:inline-flex;align-items:center;gap:16px;padding:20px 36px;
+  background:#d4c689;color:var(--ink);border:1px solid #d4c689;
+  font-family:'Nanum Myeongjo',serif;font-weight:800;font-size:16px;text-decoration:none;transition:all .3s;
+}
+.apply-btn:hover{background:transparent;color:#d4c689}
+.apply-btn .arr{transition:transform .3s}
+.apply-btn:hover .arr{transform:translateX(8px)}
+.cbox{border:1px solid rgba(236,235,228,.2);padding:40px;background:rgba(236,235,228,.03)}
+.cbox .r{padding:20px 0;border-bottom:1px solid rgba(236,235,228,.15);display:flex;justify-content:space-between;align-items:baseline;gap:20px}
+.cbox .r:first-child{padding-top:0}
+.cbox .r:last-child{border:none;padding-bottom:0}
+.cbox .l{font-family:'IBM Plex Mono';font-size:10px;letter-spacing:.2em;color:rgba(212,198,137,.8);text-transform:uppercase}
+.cbox .v{font-family:'Nanum Myeongjo',serif;font-size:18px;color:var(--paper);font-weight:700;text-align:right}
+.cbox .v.big{font-size:26px;color:#d4c689}
+
+/* ABOUT */
+.about{padding:160px 0;background:var(--paper-2)}
+.about-intro{display:grid;grid-template-columns:1fr 1.6fr;gap:80px;align-items:start;margin-bottom:80px}
+.about-intro h2{font-family:'Nanum Myeongjo',serif;font-size:clamp(40px,5vw,80px);line-height:1.05;letter-spacing:-.03em;font-weight:800;margin-top:20px}
+.about-intro h2 em{font-style:italic;color:var(--rust)}
+.about-intro .body{font-family:'Nanum Myeongjo',serif}
+.about-intro .body p{font-size:18px;line-height:1.9;margin-bottom:20px}
+.about-intro .body p:first-child{font-size:22px;line-height:1.7;color:var(--moss);font-weight:700;border-left:3px solid var(--rust);padding-left:24px;margin-bottom:32px}
+
+.vm{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--line);margin-bottom:80px}
+.vm .cell{padding:48px 44px;border-right:1px solid var(--line)}
+.vm .cell:last-child{border-right:none;background:var(--ink);color:var(--paper)}
+.vm .mk{font-family:'IBM Plex Mono';font-size:11px;letter-spacing:.2em;color:var(--moss);text-transform:uppercase;margin-bottom:24px}
+.vm .cell:last-child .mk{color:#d4c689}
+.vm h4{font-family:'Nanum Myeongjo',serif;font-size:28px;font-weight:800;letter-spacing:-.02em;line-height:1.3;margin-bottom:16px}
+.vm p{font-size:14px;line-height:1.8;color:var(--ink)}
+.vm .cell:last-child p{color:rgba(236,235,228,.75)}
+
+.why-head{margin-bottom:48px}
+.why-head h3{font-family:'Nanum Myeongjo',serif;font-size:clamp(32px,4vw,56px);line-height:1.1;letter-spacing:-.03em;font-weight:800;margin-top:20px}
+.why-head h3 em{font-style:italic;color:var(--rust)}
+.why{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-top:2px solid var(--ink);border-bottom:1px solid var(--line)}
+.why-c{padding:40px 32px;border-right:1px solid var(--line)}
+.why-c:last-child{border-right:none}
+.why-c .n{font-family:'IBM Plex Mono';font-size:11px;letter-spacing:.2em;color:var(--moss);margin-bottom:40px;text-transform:uppercase}
+.why-c h5{font-family:'Nanum Myeongjo',serif;font-size:22px;font-weight:800;margin-bottom:14px;letter-spacing:-.01em}
+.why-c p{font-size:14px;color:var(--ink);line-height:1.8}
+
+/* FOOTER */
+.footer{background:var(--ink);color:rgba(236,235,228,.7);padding:80px 0 40px;border-top:1px solid rgba(236,235,228,.15)}
+.ft{display:grid;grid-template-columns:2fr 1fr 1fr;gap:60px;padding-bottom:48px;border-bottom:1px solid rgba(236,235,228,.15);margin-bottom:32px}
+.ft-logo{font-family:'Nanum Myeongjo',serif;font-size:28px;font-weight:800;color:var(--paper);line-height:1.1;margin-bottom:20px}
+.ft-logo em{color:#d4c689;font-style:italic}
+.ft p{font-family:'Nanum Myeongjo',serif;font-size:14px;line-height:1.9;margin-bottom:4px}
+.ft h5{font-family:'IBM Plex Mono';font-size:10px;letter-spacing:.2em;color:#d4c689;text-transform:uppercase;margin-bottom:16px}
+.ft a{color:inherit;text-decoration:none}
+.ft a:hover{color:var(--paper)}
+.ft-bot{display:flex;justify-content:space-between;font-family:'IBM Plex Mono';font-size:11px;color:rgba(236,235,228,.4);letter-spacing:.1em;text-transform:uppercase}
+
+@media(max-width:1024px){
+  .nav-links{display:none}
+  .hero-deck,.hero-bot,.pg,.awards-head,.judging-head,.apply-grid,.about-intro,.winners-head{grid-template-columns:1fr;gap:40px}
+  .pg-body{columns:1}
+  .aitem{grid-template-columns:60px 1fr;gap:24px}
+  .aitem .arr,.aitem p{display:none}
+  .esg-row,.tline,.why{grid-template-columns:1fr}
+  .esg-col,.tstep,.why-c{border-right:none;border-bottom:1px solid rgba(236,235,228,.2)}
+  .bgrid,.vm{grid-template-columns:1fr}
+  .wrow{grid-template-columns:1fr;gap:8px}
+  .ft{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="#top" style="color:inherit;text-decoration:none">
+    <div class="brand">大韓民國 지속가능경영 大賞<small>KOREA SUSTAINABILITY MANAGEMENT AWARDS · 2026</small></div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#purpose">趣旨</a></li>
+    <li><a href="#awards">부문</a></li>
+    <li><a href="#judging">심사</a></li>
+    <li><a href="#schedule">일정</a></li>
+    <li><a href="#winners">수상</a></li>
+    <li><a href="#apply">접수</a></li>
+  </ul>
+  <div class="nav-num">VOL. 2026 · ISSUE 04</div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="top">
+  <div class="container">
+    <div class="masthead">
+      <div class="c">
+        <span>VOL. 2026</span>
+        <span>ISSUE 04 · APRIL</span>
+        <span>EDITORIAL EDITION</span>
+      </div>
+      <div class="c">
+        <span>시상식 2026.06.12</span>
+        <span>건국대학교 경영관</span>
+      </div>
+    </div>
+
+    <h1 class="hero-title">
+      <span class="ln1">Vol. 2026 · 大韓民國</span>
+      지속가능<em>경영</em><br>
+      대상.
+    </h1>
+
+    <div class="hero-deck">
+      <p class="lede">글로벌 규제 강화와 디지털 전환이라는 거대한 파도 속에서도, 흔들림 없는 혁신으로 내일의 가치를 증명해내는 리더들을 기립니다. 경제적 가치와 사회적 책임이 조화롭게 공존하는 ‘더 나은 내일’을 함께 설계하는 자리.</p>
+      <div class="hero-col">
+        <div class="k">Host</div>
+        <div class="v">한국기업경영학회</div>
+        <div class="k">Organizer</div>
+        <div class="v">한국지속가능경영원</div>
+      </div>
+      <div class="hero-col">
+        <div class="k">Date</div>
+        <div class="v">2026.06.12 FRI</div>
+        <div class="k">Venue</div>
+        <div class="v">건국대학교 경영관</div>
+      </div>
+    </div>
+
+    <div class="hero-bot">
+      <div class="hero-bot-fig fade">
+        <svg viewBox="0 0 800 500" preserveAspectRatio="none">
+          <defs>
+            <pattern id="grain" width="4" height="4" patternUnits="userSpaceOnUse">
+              <circle cx="1" cy="1" r=".6" fill="#d4c689"/>
+            </pattern>
+          </defs>
+          <rect width="800" height="500" fill="url(#grain)"/>
+          <path d="M0 400 Q200 350 400 380 T800 370 L800 500 L0 500 Z" fill="#1a2f1a" opacity=".5"/>
+          <path d="M0 440 Q250 410 500 430 T800 420 L800 500 L0 500 Z" fill="#1a2f1a" opacity=".4"/>
+          <!-- abstract leaf lines -->
+          <g stroke="#d4c689" stroke-width=".6" fill="none" opacity=".4">
+            <path d="M400 50 Q320 180 340 350"/>
+            <path d="M400 50 Q480 180 460 350"/>
+            <path d="M400 50 L400 350"/>
+            <path d="M400 150 Q340 180 310 230"/>
+            <path d="M400 150 Q460 180 490 230"/>
+          </g>
+        </svg>
+        <div class="cap">Fig. 01 · 지속가능의 풍경</div>
+        <div class="fq">“내일의 가치를<br><em>오늘 증명</em>하다.”</div>
+      </div>
+
+      <div class="cd-box">
+        <div class="hd">
+          <span class="t">Countdown</span>
+          <span class="d">6.12 FRI</span>
+        </div>
+        <h3>시상식까지 남은 시간</h3>
+        <div class="cd-grid">
+          <div class="cd-u"><div class="cd-n" data-u="d">00</div><div class="cd-l">Days</div></div>
+          <div class="cd-u"><div class="cd-n" data-u="h">00</div><div class="cd-l">Hours</div></div>
+          <div class="cd-u"><div class="cd-n" data-u="m">00</div><div class="cd-l">Min</div></div>
+          <div class="cd-u"><div class="cd-n" data-u="s">00</div><div class="cd-l">Sec</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PURPOSE -->
+<section class="purpose" id="purpose">
+  <div class="container">
+    <div class="pg fade">
+      <div>
+        <div class="marker">趣旨 · Purpose of the Award</div>
+        <h2 class="hd" style="margin-top:24px">내일의 가치를<br><em>오늘</em> 증명하다.</h2>
+        <div class="pg-body">
+          <p>글로벌 규제 강화와 디지털 전환이라는 거대한 파도 속에서도, 흔들림 없는 혁신으로 내일의 가치를 증명해내는 리더들이 있습니다. <strong>『2026년 대한민국 지속가능경영 대상』</strong>은 지속가능경영의 본질을 실천하며 새로운 표준을 세워가는 기업과 기관을 발굴하기 위해 마련되었습니다.</p>
+          <p>대기업부터 중소기업, 공공기관까지 ESG 내재화를 실현한 주역들의 성과를 기리고, 경제적 가치와 사회적 책임이 조화롭게 공존하는 대한민국의 <strong>‘더 나은 내일’</strong>을 함께 설계하겠습니다.</p>
+        </div>
+      </div>
+      <div class="col-r">
+        <div class="marker">Publisher’s Note</div>
+        <div class="pull">“ESG는 선택이 아닌, 모든 기업이 마주해야 할 내일의 문법.”</div>
+        <div class="meta">
+          <strong>HOST</strong><br>한국기업경영학회<br><br>
+          <strong>ORGANIZER</strong><br>한국지속가능경영원<br><br>
+          <strong>SINCE</strong><br>2023<br><br>
+          <strong>EDITION</strong><br>4th · Vol. 2026
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AWARDS -->
+<section class="awards" id="awards">
+  <div class="container">
+    <div class="awards-head fade">
+      <div>
+        <div class="marker">시상 부문 · Categories</div>
+        <h2 style="margin-top:20px">네 개의 카테고리,<br><em>하나의</em> 기준.</h2>
+      </div>
+      <p>대기업, 중견기업, 중소기업, 공공기관 등을 대상으로 지속가능경영 종합대상과 ESG(환경·사회·지배구조) 부문별 대상을 시상합니다.</p>
+    </div>
+
+    <div class="awards-list">
+      <div class="aitem fade">
+        <div class="n">01</div>
+        <div>
+          <div class="lbl">Grand Prize</div>
+          <h3>지속가능경영 대상</h3>
+        </div>
+        <p>ESG 전 영역에서 탁월한 성과를 이룬 기업·기관에 수여하는 최고의 영예. 단 한 곳의 종합대상 수상자를 선정합니다.</p>
+        <div class="arr">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </div>
+      </div>
+      <div class="aitem fade">
+        <div class="n">02</div>
+        <div>
+          <div class="lbl">Environment · 環境</div>
+          <h3>환경 부문 대상</h3>
+        </div>
+        <p>기후변화 대응, 자원순환, 에너지 효율화, 친환경 공급망 및 제품·서비스 영역에서 모범을 보인 주체.</p>
+        <div class="arr">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </div>
+      </div>
+      <div class="aitem fade">
+        <div class="n">03</div>
+        <div>
+          <div class="lbl">Social · 社會</div>
+          <h3>사회 부문 대상</h3>
+        </div>
+        <p>인재경영, 소비자 보호, 파트너 상생, 사회공헌, 노동·인권, 다양성·안전보건에 걸쳐 사회적 책임을 실천한 주체.</p>
+        <div class="arr">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </div>
+      </div>
+      <div class="aitem fade">
+        <div class="n">04</div>
+        <div>
+          <div class="lbl">Governance · 支配構造</div>
+          <h3>지배구조 부문 대상</h3>
+        </div>
+        <p>투명성, 이사회 활동, 준법경영, 리스크 관리 등 건전한 거버넌스 체계를 구축한 주체.</p>
+        <div class="arr">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- JUDGING -->
+<section class="judging" id="judging">
+  <div class="container">
+    <div class="judging-head fade">
+      <div>
+        <div class="marker">審査方法 · Evaluation</div>
+        <h2 style="margin-top:20px"><em>E · S · G</em>,<br>세 개의 축.</h2>
+      </div>
+      <p>한국지속가능경영원의 ESG 평가지표를 활용하여, ESG 분야 교수 및 전문가로 구성된 심의위원회가 지속가능경영보고서 기반의 공정한 심사를 진행합니다.</p>
+    </div>
+
+    <div class="esg-row fade">
+      <div class="esg-col">
+        <div class="big">E<em>nv.</em></div>
+        <h4>환경</h4>
+        <ul>
+          <li>환경경영 전략 및 목표</li>
+          <li>환경 리스크 관리</li>
+          <li>기후변화 대응</li>
+          <li>자원 순환</li>
+          <li>에너지 효율화</li>
+          <li>친환경 공급망</li>
+          <li>친환경 제품·서비스</li>
+          <li>환경 정보 공개</li>
+        </ul>
+      </div>
+      <div class="esg-col">
+        <div class="big">S<em>oc.</em></div>
+        <h4>사회</h4>
+        <ul>
+          <li>사회적 책임 전략</li>
+          <li>인재 경영</li>
+          <li>소비자 보호</li>
+          <li>정보 보호</li>
+          <li>파트너 상생</li>
+          <li>사회 공헌</li>
+          <li>노동·인권</li>
+          <li>다양성·안전보건</li>
+        </ul>
+      </div>
+      <div class="esg-col">
+        <div class="big">G<em>ov.</em></div>
+        <h4>지배구조</h4>
+        <ul>
+          <li>기업 투명성</li>
+          <li>이사회 활동</li>
+          <li>준법 경영</li>
+          <li>리스크 관리</li>
+          <li>윤리 경영</li>
+          <li>주주 권리 보호</li>
+          <li>감사 기구 독립성</li>
+          <li>ESG 공시 수준</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="judging-note fade">
+      <strong>심사 자료</strong>
+      <span>2024 ~ 2025년 발간된 <em style="color:#d4c689;font-style:italic">지속가능경영보고서</em> 또는 <em style="color:#d4c689;font-style:italic">ESG 공적서</em></span>
+    </div>
+  </div>
+</section>
+
+<!-- BENEFITS -->
+<section class="benefits" id="benefits">
+  <div class="container">
+    <div class="benefits-head fade">
+      <div class="marker" style="justify-content:center">시상 혜택 · Benefits</div>
+      <h2>수상, <em>그 이상</em>의 가치.</h2>
+    </div>
+    <div class="bgrid fade">
+      <div class="bitem">
+        <div class="fig">Ⅰ</div>
+        <div>
+          <h4>언론·학회 보도</h4>
+          <p>학회 및 주요 언론을 통한 기업·기관의 지속가능경영 활동 보도 확산.</p>
+        </div>
+      </div>
+      <div class="bitem">
+        <div class="fig">Ⅱ</div>
+        <div>
+          <h4>인증패 & 트로피</h4>
+          <p>지속가능경영 우수기업 공식 인증패 및 트로피 수여로 브랜드 신뢰 강화.</p>
+        </div>
+      </div>
+      <div class="bitem">
+        <div class="fig">Ⅲ</div>
+        <div>
+          <h4>세미나·포럼 초청</h4>
+          <p>국내외 지속가능경영 세미나 및 주요 포럼에 발표·패널로 초청.</p>
+        </div>
+      </div>
+      <div class="bitem">
+        <div class="fig">Ⅳ</div>
+        <div>
+          <h4>서비스 비용 할인</h4>
+          <p>한국지속가능경영원의 ESG 컨설팅·보고서·검증·교육 등 주요 서비스 비용 할인.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SCHEDULE -->
+<section class="schedule" id="schedule">
+  <div class="container">
+    <div class="schedule-head fade">
+      <div class="marker">Timeline · 시상 절차 및 일정</div>
+      <h2>네 단계의<br><em>엄정한</em> 프로세스.</h2>
+      <p>지속가능경영 평가부터 시상식까지, 투명하고 공정한 심사를 거쳐 대한민국의 새로운 표준을 가려냅니다.</p>
+    </div>
+    <div class="tline fade">
+      <div class="tstep active">
+        <div class="s">Ⅰ · Evaluation</div>
+        <h4>지속가능경영 평가</h4>
+        <div class="d">~ 5.18 (월)</div>
+        <p>한국지속가능경영원이 ESG 평가지표를 활용하여 기업·기관의 보고서를 정량·정성 분석.</p>
+      </div>
+      <div class="tstep">
+        <div class="s">Ⅱ · Committee</div>
+        <h4>심사위원회 평가</h4>
+        <div class="d">~ 5.22 (금)</div>
+        <p>ESG 교수 및 전문가로 구성된 심의위원회가 공정한 심사를 거쳐 수상자 최종 선정.</p>
+      </div>
+      <div class="tstep">
+        <div class="s">Ⅲ · Notice</div>
+        <h4>수상 안내</h4>
+        <div class="d">~ 5.25 (월)</div>
+        <p>수상 대상 기업·기관에 결과를 안내하고 시상식 참여 관련 세부 사항 공유.</p>
+      </div>
+      <div class="tstep">
+        <div class="s">Ⅳ · Ceremony</div>
+        <h4>시상식</h4>
+        <div class="d">6.12 (금)</div>
+        <p>건국대학교 경영관에서 2026 대한민국 지속가능경영 대상 시상식이 개최됩니다.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WINNERS -->
+<section class="winners" id="winners">
+  <div class="container">
+    <div class="winners-head fade">
+      <div>
+        <div class="marker">Past Winners · 역대 수상 기업</div>
+        <h2>역대 수상<br><em>기업·기관.</em></h2>
+      </div>
+      <div class="wtabs">
+        <button class="wtab active" data-year="2023">2023</button>
+        <button class="wtab" data-year="2024">2024</button>
+        <button class="wtab" data-year="2025">2025</button>
+      </div>
+    </div>
+
+    <div class="wpanel active" data-panel="2023">
+      <div class="wrow"><div class="idx">01</div><div class="cat grand">지속가능경영 대상</div><div class="bdg">Grand</div><div class="names">부산항만공사</div></div>
+      <div class="wrow"><div class="idx">02</div><div class="cat">환경 부문 대상</div><div class="bdg">Env.</div><div class="names">여수광양항만공사<span class="sep">·</span>인천항만공사<span class="sep">·</span>(주)해양에너지</div></div>
+      <div class="wrow"><div class="idx">03</div><div class="cat">사회 부문 대상</div><div class="bdg">Soc.</div><div class="names">한국고용정보원<span class="sep">·</span>해양환경공단<span class="sep">·</span>시앤피컨설팅<span class="sep">·</span>(주)모션<span class="sep">·</span>퍼솔켈리코리아</div></div>
+      <div class="wrow"><div class="idx">04</div><div class="cat">지배구조 부문 대상</div><div class="bdg">Gov.</div><div class="names">대한무역투자진흥공사<span class="sep">·</span>한국어촌어항공단<span class="sep">·</span>현대엘리베이터</div></div>
+    </div>
+
+    <div class="wpanel" data-panel="2024">
+      <div class="wrow"><div class="idx">01</div><div class="cat grand">지속가능경영 대상</div><div class="bdg">Grand</div><div class="names">한국어촌어항공단</div></div>
+      <div class="wrow"><div class="idx">02</div><div class="cat">환경 부문 대상</div><div class="bdg">Env.</div><div class="names">울산항만공사</div></div>
+      <div class="wrow"><div class="idx">03</div><div class="cat">사회 부문 대상</div><div class="bdg">Soc.</div><div class="names">아동권리보장원</div></div>
+    </div>
+
+    <div class="wpanel" data-panel="2025">
+      <div class="wrow"><div class="idx">01</div><div class="cat grand">지속가능경영 대상</div><div class="bdg">Grand</div><div class="names">한국토지주택공사</div></div>
+      <div class="wrow"><div class="idx">02</div><div class="cat">환경 부문 대상</div><div class="bdg">Env.</div><div class="names">KT<span class="sep">·</span>국토안전관리원<span class="sep">·</span>부산항만공사</div></div>
+      <div class="wrow"><div class="idx">03</div><div class="cat">사회 부문 대상</div><div class="bdg">Soc.</div><div class="names">한국산업인력공단<span class="sep">·</span>한국교통안전공단</div></div>
+      <div class="wrow"><div class="idx">04</div><div class="cat">지배구조 부문 대상</div><div class="bdg">Gov.</div><div class="names">KOTRA<span class="sep">·</span>여수광양항만공사<span class="sep">·</span>SR</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- APPLY -->
+<section class="apply" id="apply">
+  <div class="container">
+    <div class="apply-grid">
+      <div class="fade">
+        <div class="marker">Apply · 접수 및 문의</div>
+        <h2>지금,<br><em>참여</em>하세요.</h2>
+        <p>참여를 희망하시는 기업·기관은 2024 ~ 2025년 발간된 지속가능경영보고서(PDF 파일)를 한국지속가능경영원으로 보내주세요.</p>
+        <a href="mailto:ksmi@konkuk.ac.kr" class="apply-btn">
+          보고서 제출하기 <span class="arr">→</span>
+        </a>
+      </div>
+      <div class="cbox fade">
+        <div class="r"><span class="l">Office</span><span class="v big">02·450·4248</span></div>
+        <div class="r"><span class="l">Email</span><span class="v">ksmi@konkuk.ac.kr</span></div>
+        <div class="r"><span class="l">Website</span><span class="v">www.kismesg.com</span></div>
+        <div class="r"><span class="l">Deadline</span><span class="v">2026.05.18 MON</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="container">
+    <div class="about-intro fade">
+      <div>
+        <div class="marker">About · 한국지속가능경영원</div>
+        <h2>韓國<br>지속가능<br><em>경영원.</em></h2>
+      </div>
+      <div class="body">
+        <p>전략적 ESG 경영을 통해 기업의 지속가능한 성장을 견인하는 선도 기관입니다.</p>
+        <p>AI 기술과 최신 트렌드를 결합한 정밀 진단·분석·보고서 발간·평가 대응까지 아우르는 통합 ESG 매니지먼트를 지원합니다. 매년 ‘대한민국 지속가능경영 대상’을 개최하여 사회적 책임을 다하는 우수 기업과 기관을 발굴함으로써 대한민국 지속가능경영의 올바른 이정표를 제시합니다.</p>
+      </div>
+    </div>
+
+    <div class="vm fade">
+      <div class="cell">
+        <div class="mk">Vision · 비전</div>
+        <h4>지속가능한 미래를 위한<br>혁신과 도전.</h4>
+      </div>
+      <div class="cell">
+        <div class="mk">Mission · 미션</div>
+        <h4>지속가능경영 플랫폼으로 기업 경쟁력 강화 및 사회적 가치 창출.</h4>
+        <p>중견·중소기업 및 공공기관 ESG 내재화 지원을 통한 기업가치 향상, 디지털 플랫폼으로 저비용 고품질 ESG 컨설팅 제공.</p>
+      </div>
+    </div>
+
+    <div class="why-head fade">
+      <div class="marker">Why KSMI</div>
+      <h3>한국지속가능경영원을<br><em>선택하는 이유.</em></h3>
+    </div>
+
+    <div class="why fade">
+      <div class="why-c">
+        <div class="n">N°01</div>
+        <h5>컨설팅 혁신</h5>
+        <p>AI와 빅데이터를 활용해 빠르고 정확한 ESG 평가 및 보고서를 제공합니다.</p>
+      </div>
+      <div class="why-c">
+        <div class="n">N°02</div>
+        <h5>확장 가능한 솔루션</h5>
+        <p>모든 기업에 활용 가능한 유연한 솔루션으로, 모든 비즈니스 규모에 적합합니다.</p>
+      </div>
+      <div class="why-c">
+        <div class="n">N°03</div>
+        <h5>글로벌 전문성</h5>
+        <p>전문가 그룹을 통한 다년간의 경험과 글로벌 관점을 제공합니다.</p>
+      </div>
+      <div class="why-c">
+        <div class="n">N°04</div>
+        <h5>비용 효율성</h5>
+        <p>자동화된 프로세스를 통해 저비용으로 고품질 서비스를 제공합니다.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="ft">
+      <div>
+        <div class="ft-logo">大韓民國<br>지속가능경영 <em>大賞.</em></div>
+        <p>서울시 광진구 능동로 120 경영관 415호</p>
+        <p>전화 02-450-4248 · 이메일 ksmi@konkuk.ac.kr</p>
+        <p style="color:#d4c689;margin-top:10px">www.kismesg.com</p>
+      </div>
+      <div>
+        <h5>Sitemap</h5>
+        <p><a href="#purpose">시상 취지</a></p>
+        <p><a href="#awards">시상 부문</a></p>
+        <p><a href="#judging">심사 방법</a></p>
+        <p><a href="#schedule">시상 절차</a></p>
+        <p><a href="#winners">역대 수상</a></p>
+      </div>
+      <div>
+        <h5>Host · Organizer</h5>
+        <p>한국기업경영학회</p>
+        <p>한국지속가능경영원</p>
+      </div>
+    </div>
+    <div class="ft-bot">
+      <span>© 2026 KSMI. All rights reserved.</span>
+      <span>Vol. 2026 · Editorial Edition</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+const target=new Date('2026-06-12T14:00:00+09:00').getTime();
+function tick(){
+  const d=target-Date.now();
+  const days=Math.max(0,Math.floor(d/864e5));
+  const hrs=Math.max(0,Math.floor(d/36e5)%24);
+  const min=Math.max(0,Math.floor(d/6e4)%60);
+  const sec=Math.max(0,Math.floor(d/1e3)%60);
+  document.querySelector('[data-u=d]').textContent=String(days).padStart(2,'0');
+  document.querySelector('[data-u=h]').textContent=String(hrs).padStart(2,'0');
+  document.querySelector('[data-u=m]').textContent=String(min).padStart(2,'0');
+  document.querySelector('[data-u=s]').textContent=String(sec).padStart(2,'0');
+}
+tick();setInterval(tick,1000);
+
+const io=new IntersectionObserver(es=>es.forEach(e=>e.isIntersecting&&e.target.classList.add('in')),{threshold:.1});
+document.querySelectorAll('.fade').forEach(el=>io.observe(el));
+
+document.querySelectorAll('.wtab').forEach(b=>b.addEventListener('click',()=>{
+  const y=b.dataset.year;
+  document.querySelectorAll('.wtab').forEach(x=>x.classList.toggle('active',x===b));
+  document.querySelectorAll('.wpanel').forEach(p=>p.classList.toggle('active',p.dataset.panel===y));
+}));
+
+document.querySelectorAll('.tstep').forEach(s=>{
+  s.addEventListener('mouseenter',()=>{
+    document.querySelectorAll('.tstep').forEach(x=>x.classList.remove('active'));
+    s.classList.add('active');
+  });
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://www.kismesg.com/awards/2026/sitemap.xml
